@@ -38,7 +38,7 @@ namespace ConstructionLab1
             }
             else
             {
-                Console.Write("No ammo");
+                Console.Write("No ammo1");
             }
         }
 
