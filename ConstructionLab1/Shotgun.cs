@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConstructionLab1
 {
-    internal class ThrowingArm
+    internal class Shotgun
     {
     }
 }

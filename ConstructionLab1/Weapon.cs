@@ -32,7 +32,6 @@ namespace ConstructionLab1
             return damage;
         }
 
-
     }
 
 }
