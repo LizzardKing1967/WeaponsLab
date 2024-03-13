@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class Rifle : Firearm
+    public class Rifle : Firearm
     {
         private int range;
 

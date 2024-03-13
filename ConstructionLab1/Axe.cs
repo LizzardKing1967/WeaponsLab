@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class Axe : SteelArm
+    public class Axe : SteelArm
     {
         private int handleLength;
 
@@ -27,9 +27,9 @@ namespace ConstructionLab1
             return base.ToString() + "Handle Length: " + handleLength + " cm";
         }
 
-        protected override double getDamage(double damage)
+        public override double GetDamage(double damage)
         {
-            return base.getDamage(damage) * (this.handleLength/100);
+            return base.GetDamage(damage) * (this.handleLength/100);
         }
     }
 }

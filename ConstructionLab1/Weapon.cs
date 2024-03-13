@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
     public class Weapon
     {
@@ -16,18 +16,24 @@ namespace ConstructionLab1
         }
     
         protected Guid Id;
-        protected string weaponName { get; set; }
 
-        protected double weight { get; set; }
+        protected string weaponName;
 
-        protected double damage { get; set; }
+        public string WeaponName { get { return weaponName; } } 
+
+
+        protected double weight;
+
+        public double Weight { get { return weight; } }
+
+        protected double damage;
 
         public override string ToString ()
         {
             return "Weapon id = " + Id + "Weapon name = " + weaponName + "Weapon weight = " + weight;
         }
 
-        protected virtual double getDamage(double damage)
+        public virtual double GetDamage(double damage)
         {
             return damage;
         }

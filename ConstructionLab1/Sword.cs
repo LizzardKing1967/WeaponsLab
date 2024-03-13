@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class Sword : SteelArm
+    public class Sword : SteelArm
     {
         private bool isEnchanted;
 
@@ -27,9 +27,9 @@ namespace ConstructionLab1
             return base.ToString() + "Is Enchanted: " + isEnchanted;
         }
 
-        protected override double getDamage(double damage)
+        public override double GetDamage(double damage)
         {
-            double newDamage = base.getDamage(damage);
+            double newDamage = base.GetDamage(damage);
             if (isEnchanted) { 
                 newDamage = damage * 1.2;
             }

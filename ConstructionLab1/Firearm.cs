@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class Firearm : Weapon
+    public class Firearm : Weapon
     {
         public Firearm(string weaponName, double weight, int fireRate, Caliber caliber, int ammoCapacity) : base(weaponName, weight)
         {
@@ -16,15 +16,19 @@ namespace ConstructionLab1
             this.caliber = caliber;
         }
 
-        protected int fireRate { get; set; }
+        protected int fireRate;
+        public int FireRate { get { return this.fireRate; } }
 
-        protected int ammoCapacity { get; set; }
+        protected int ammoCapacity;
 
+        public int AmmoCapacity { get { return this.ammoCapacity; } }
         protected int currentCapacity { get; set; }
+
+        public int CurentCapacity { get { return this.currentCapacity; } }
 
         private Caliber caliber;
 
-        protected virtual void Shoot(String target)
+        public virtual void Shoot(String target)
         {
             if (this.currentCapacity > 0)
             {
@@ -37,10 +41,10 @@ namespace ConstructionLab1
             }
         }
 
-        protected void Reload()
+        public void Reload()
         { this.currentCapacity = ammoCapacity; }
 
-        protected override double getDamage(double damage)
+        public override double GetDamage(double damage)
         {
             return fireRate * caliber.CaliberDamage;
         }

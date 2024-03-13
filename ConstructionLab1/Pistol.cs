@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class Pistol : Firearm
+    public class Pistol : Firearm
     {
 
         private bool hasSafety;
@@ -24,7 +24,7 @@ namespace ConstructionLab1
         }
 
 
-        protected override void Shoot(string target)
+        public override void Shoot(string target)
         {
             if (!hasSafety)
             {

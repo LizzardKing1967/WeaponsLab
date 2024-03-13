@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConstructionLab1
+namespace WeaponsLib
 {
-    internal class SteelArm : Weapon
+    public class SteelArm : Weapon
     {
         public SteelArm(string weaponName, double weight, double strikeRate, double degreeOfSharpening) : base(weaponName, weight)
         {
@@ -14,10 +14,13 @@ namespace ConstructionLab1
             this.degreeOfSharpening = degreeOfSharpening;
 
         }
-        double strikeRate {  get; set; }
-        double degreeOfSharpening { get; set; }
+        double strikeRate;
+        public double StrikeRate { get { return this.strikeRate;} }
 
-        protected virtual void Strike(String target)
+        double degreeOfSharpening;
+        public double DegreeOfSharpening { get { return this.degreeOfSharpening; } }
+
+        public virtual void Strike(String target)
         {
             if (this.degreeOfSharpening > 0)
             {
@@ -30,7 +33,7 @@ namespace ConstructionLab1
             }
         }
 
-        protected virtual void Sharpening()
+        public virtual void Sharpening()
         {
             this.degreeOfSharpening ++;
         }
