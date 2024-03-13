@@ -9,40 +9,38 @@ namespace ConstructionLab1
 {
     internal class Pistol : Firearm
     {
-        
-        private bool isHolstered;
 
-        public Pistol(string weaponName, double weight, int fireRate, string caliber, int ammoCapacity) : base(weaponName, weight, fireRate, caliber, ammoCapacity)
+        private bool hasSafety;
+
+        public Pistol(string weaponName, double weight, int fireRate, Caliber caliber, int ammoCapacity, bool hasSafety) : base(weaponName, weight, fireRate, caliber, ammoCapacity)
         {
-            isHolstered = true;
+            this.hasSafety = hasSafety;
         }
 
-
-        //метод вытаскивания или убирания пистолта в кобуру
-        public void Holster()
+        public void ToggleSafety()
         {
-            if (isHolstered)
-            {
-                Console.WriteLine($"{weaponName} is already holstered.");
-            }
-            else
-            {
-                Console.WriteLine($"Holstering {weaponName}");
-                isHolstered = true;
-            }
+            hasSafety = !hasSafety;
+            Console.WriteLine("Safety " + (hasSafety ? "enabled" : "disabled"));
         }
+
 
         protected override void Shoot(string target)
         {
-            if (isHolstered)
-            {
-                Console.WriteLine($"Draw {weaponName} before shooting.");
-            }
-            else
+            if (!hasSafety)
             {
                 base.Shoot(target);
             }
+            else
+            {
+                Console.WriteLine("Safety is enabled. Cannot shoot.");
+            }
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "Has Safety: " + hasSafety;
+        }
+
     }
 
    
