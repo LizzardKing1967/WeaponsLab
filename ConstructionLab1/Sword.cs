@@ -12,29 +12,27 @@ namespace WeaponsLib
         /// <summary>
         /// Поле класса, указывающие, зачарован ли меч
         /// </summary>
-        private bool isEnchanted;
-
+        private bool _isEnchanted;
 
         /// <summary>
         /// Конструктр класса Sword
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="strikeRate"></param>
-        /// <param name="degreeOfSharpening"></param>
-        /// <param name="isEnchanted"></param>
-        public Sword(string weaponName, double weight, double strikeRate, double degreeOfSharpening, bool isEnchanted)
-            : base(weaponName, weight, strikeRate, degreeOfSharpening)
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parStrikeRate"></param>
+        /// <param name="parDegreeOfSharpening"></param>
+        /// <param name="parIsEnchanted"></param>
+        public Sword(string parWeaponName, double parWeight, double parDegreeOfDanger, double parDegreeOfSharpening, double parStrikeRate, bool parIsEnchanted)
+            : base(parWeaponName, parWeight, parDegreeOfDanger, parStrikeRate, parDegreeOfSharpening)
         {
-            this.isEnchanted = isEnchanted;
+            this._isEnchanted = parIsEnchanted;
         }
         /// <summary>
         /// Метод позволяющий зачаровать меч
         /// </summary>
         public void Enchant()
         {
-            isEnchanted = true;
-            Console.WriteLine("Sword is enchanted!");
+            _isEnchanted = true;
         }
         /// <summary>
         /// Переопределенный метод ToString
@@ -42,18 +40,17 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + "Is Enchanted: " + isEnchanted;
+            return string.Format("{0}, Is Enchanted: {1}", base.ToString(), _isEnchanted);
         }
         /// <summary>
         /// Переопрделенный метод оценки урона, учитывающий зачарование меча
         /// </summary>
-        /// <param name="damage"></param>
         /// <returns></returns>
-        public override double GetDamage(double damage)
+        public override double GetDamage()
         {
-            double newDamage = base.GetDamage(damage);
-            if (isEnchanted) { 
-                newDamage = damage * 1.2;
+            double newDamage = base.GetDamage();
+            if (_isEnchanted) { 
+                newDamage = newDamage * 1.2;
             }
             return newDamage;
         }

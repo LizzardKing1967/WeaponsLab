@@ -12,31 +12,31 @@ namespace WeaponsLib
         /// Поле для класса, обозначающее длину рукоятки топора
         /// </summary>
 
-        private int handleLength;
+        private int _handleLength;
 
         /// <summary>
         /// Конструктор класса Axe
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="strikeRate"></param>
-        /// <param name="degreeOfSharpening"></param>
-        /// <param name="handleLength"></param>
-        public Axe(string weaponName, double weight, double strikeRate, double degreeOfSharpening, int handleLength)
-            : base(weaponName, weight, strikeRate, degreeOfSharpening)
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parStrikeRate"></param>
+        /// <param name="parDegreeOfSharpening"></param>
+        /// <param name="parHandleLength"></param>
+        /// <param name="parDegreeOfDanger"></param>
+        public Axe(string parWeaponName, double parWeight, double parDegreeOfDanger, double parStrikeRate, double parDegreeOfSharpening, int parHandleLength)
+            : base(parWeaponName, parWeight, parDegreeOfDanger ,parStrikeRate, parDegreeOfSharpening)
         {
-            this.handleLength = handleLength;
+            this._handleLength = parHandleLength;
         }
 
         /// <summary>
         /// Метод класса, отвечающий за расширение рукоятки топора
         /// </summary>
-        /// <param name="length"></param>
+        /// <param name="parLength"></param>
 
-        public void ExtendHandle(int length)
+        public void ExtendHandle(int parLength)
         {
-            this.handleLength += length;
-            Console.WriteLine("Handle extended by " + length + " cm.");
+            this._handleLength += parLength;
         }
 
         /// <summary>
@@ -46,18 +46,17 @@ namespace WeaponsLib
 
         public override string ToString()
         {
-            return base.ToString() + "Handle Length: " + handleLength + " cm";
+            return string.Format("{0}, Handle Length: {1} cm", base.ToString(), _handleLength);
         }
+
 
         /// <summary>
         /// Переопределенный метод оценки урона от оружия, учитывающий длину рукоятки топора
         /// </summary>
-        /// <param name="damage"></param>
         /// <returns></returns>
-
-        public override double GetDamage(double damage)
+        public override double GetDamage()
         {
-            return base.GetDamage(damage) * (this.handleLength/100);
+            return base.GetDamage() * (this._handleLength/100);
         }
     }
 }

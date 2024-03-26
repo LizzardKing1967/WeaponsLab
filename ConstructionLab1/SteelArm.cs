@@ -13,53 +13,54 @@ namespace WeaponsLib
         /// Поле класса, обозначающий скорость удара холодным оружием
         /// </summary>
 
-        private double strikeRate;
-
-        /// <summary>
-        /// Getter для поля strikeRate
-        /// </summary>
-        public double StrikeRate { get { return this.strikeRate; } }
-
+        private double _strikeRate;
+       
         /// <summary>
         /// Поле ккласса, обозначающее степень заточки оружия
         /// </summary>
 
-        private double degreeOfSharpening;
+        private double _degreeOfSharpening;
 
         /// <summary>
-        /// Getter для поля degreeOfSharpening
+        /// Getter для поля parDegreeOfSharpening
         /// </summary>
 
-        public double DegreeOfSharpening { get { return this.degreeOfSharpening; } }
-       
+        public double DegreeOfSharpening { get { return this._degreeOfSharpening; } }
+
+        /// <summary>
+        /// Getter для поля parStrikeRate
+        /// </summary>
+        public double StrikeRate { get { return this._strikeRate; } }
+
         /// <summary>
         /// Конструктр для класса SteelArm
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="strikeRate"></param>
-        /// <param name="degreeOfSharpening"></param>
-        public SteelArm(string weaponName, double weight, double strikeRate, double degreeOfSharpening) : base(weaponName, weight)
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parStrikeRate"></param>
+        /// <param name="parDegreeOfSharpening"></param>
+        public SteelArm(string parWeaponName, double parWeight, double parDegreeOfDanger, double parStrikeRate, double parDegreeOfSharpening) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
-            this.strikeRate = strikeRate;
-            this.degreeOfSharpening = degreeOfSharpening;
+            this._strikeRate = parStrikeRate;
+            this._degreeOfSharpening = parDegreeOfSharpening;
 
         }
        
         /// <summary>
         /// Метод удара холодным оружием по цели
         /// </summary>
-        /// <param name="target"></param>
-        public virtual void Strike(String target)
+        /// <param name="parTarget"></param>
+        public virtual string Strike(String parTarget)
         {
-            if (this.degreeOfSharpening > 0)
+            if (this._degreeOfSharpening > 0)
             {
-                Console.Write("Strike to" + target);
-                this.degreeOfSharpening--;
+                this._degreeOfSharpening--;
+                return $"Strike to {parTarget}";
             }
             else
             {
-                Console.Write("Your weapon is dull, sharp it!");
+                return "Your weapon is dull, sharp it!";
             }
         }
 
@@ -68,7 +69,7 @@ namespace WeaponsLib
         /// </summary>
         public virtual void Sharpening()
         {
-            this.degreeOfSharpening ++;
+            this._degreeOfSharpening ++;
         }
         /// <summary>
         /// Переопределенный метод ToString
@@ -76,11 +77,8 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + "Strike rate" + strikeRate + "Degree of sharpening" + degreeOfSharpening;
+            return string.Format("{0}, Strike rate: {1}, Degree of sharpening: {2}", base.ToString(), _strikeRate, _degreeOfSharpening);
         }
-
-
-
 
     }
 }

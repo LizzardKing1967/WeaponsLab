@@ -12,31 +12,31 @@ namespace WeaponsLib
         /// Поле класса, обозначающее дистанции стрельбы из винтовки
         /// </summary>
 
-        private int range;
+        private int _range;
 
         /// <summary>
         /// Конструктр класса Rifle
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="fireRate"></param>
-        /// <param name="caliber"></param>
-        /// <param name="ammoCapacity"></param>
-        /// <param name="range"></param>
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parFireRate"></param>
+        /// <param name="parCaliber"></param>
+        /// <param name="parAmmoCapacity"></param>
+        /// <param name="parRange"></param>
 
-        public Rifle(string weaponName, double weight, int fireRate, Caliber caliber, int ammoCapacity, int range)
-            : base(weaponName, weight, fireRate, caliber, ammoCapacity)
+        public Rifle(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, int parRange)
+            : base(parWeaponName, parWeight, parDegreeOfDanger, parFireRate, parCaliber, parAmmoCapacity)
         {
-            this.range = range;
+            this._range = parRange;
         }
         /// <summary>
         /// Метод для прицеливания из винтовки, увеличивающий дистанции выстрела
         /// </summary>
-        /// <param name="factor"></param>
-        public void Zoom(int factor)
+        /// <param name="parFactor"></param>
+        public void Zoom(int parFactor)
         {
-            range *= factor;
-            Console.WriteLine("Zoomed. New range: " + range + " meters");
+            _range *= parFactor;
         }
         /// <summary>
         /// Переопределенный метод ToString
@@ -44,7 +44,7 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + "Range: " + range + " meters";
+            return string.Format("{0}, Range: {1} meters", base.ToString(), _range);
         }
     }
 }

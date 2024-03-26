@@ -13,21 +13,22 @@ namespace WeaponsLib
         /// Свойства класса, обозначающее находится ли оружие на предохранителе
         /// </summary>
 
-        private bool hasSafety;
+        private bool _hasSafety;
 
         /// <summary>
         /// Конструктор класса Pistol
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="fireRate"></param>
-        /// <param name="caliber"></param>
-        /// <param name="ammoCapacity"></param>
-        /// <param name="hasSafety"></param>
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parFireRate"></param>
+        /// <param name="parCaliber"></param>
+        /// <param name="parAmmoCapacity"></param>
+        /// <param name="parHasSafety"></param>
 
-        public Pistol(string weaponName, double weight, int fireRate, Caliber caliber, int ammoCapacity, bool hasSafety) : base(weaponName, weight, fireRate, caliber, ammoCapacity)
+        public Pistol(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, bool parHasSafety) : base(parWeaponName, parWeight, parDegreeOfDanger,parFireRate, parCaliber, parAmmoCapacity)
         {
-            this.hasSafety = hasSafety;
+            this._hasSafety = parHasSafety;
         }
 
         /// <summary>
@@ -35,23 +36,22 @@ namespace WeaponsLib
         /// </summary>
         public void ToggleSafety()
         {
-            hasSafety = !hasSafety;
-            Console.WriteLine("Safety " + (hasSafety ? "enabled" : "disabled"));
+            _hasSafety = !_hasSafety;
         }
 
         /// <summary>
         /// Переопределенный метод стрельбы, проверяющий, стоит ли оружие на предохранителе
         /// </summary>
-        /// <param name="target"></param>
-        public override void Shoot(string target)
+        /// <param name="parTarget"></param>
+        public override string Shoot(string parTarget)
         {
-            if (!hasSafety)
+            if (!_hasSafety)
             {
-                base.Shoot(target);
+                return base.Shoot(parTarget);
             }
             else
             {
-                Console.WriteLine("Safety is enabled. Cannot shoot.");
+                return "Safety is enabled. Cannot shoot.";
             }
         }
 
@@ -62,7 +62,7 @@ namespace WeaponsLib
 
         public override string ToString()
         {
-            return base.ToString() + "Has Safety: " + hasSafety;
+            return string.Format("{0}, Has Safety: {1}", base.ToString(), _hasSafety);
         }
 
     }

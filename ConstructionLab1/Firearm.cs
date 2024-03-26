@@ -12,80 +12,83 @@ namespace WeaponsLib
         /// <summary>
         /// Поле класса, обозначающий темп стрельбы оружия
         /// </summary>
-        private int fireRate;
+        private int _fireRate;
 
-        /// <summary>
-        /// Getter для поля fireRate
-        /// </summary>
-        public int FireRate { get { return this.fireRate; } }
-
-
-        /// <summary>
-        /// Поле, обозначающие емкость магазина оружия
-        /// </summary>
-        private int ammoCapacity;
-
-    
-        /// <summary>
-        /// Поле обозначающее текущее количество боеприпасов в оружии
-        /// </summary>
-
-        private int currentCapacity { get; set; }
-
-        
-
-        /// <summary>
-        /// Getter для поля ammoCapacity
-        /// </summary>
-
-
-        public int AmmoCapacity { get { return this.ammoCapacity; } }
-
-        /// <summary>
-        /// Getter для поля currentCapacity
-        /// </summary>
-
-        public int CurentCapacity { get { return this.currentCapacity; } }
 
         /// <summary>
         /// Поле класса Caliber, обозначающее калибр оружия
         /// </summary>
-        private Caliber caliber;
+        private Caliber _caliber;
+
+        /// <summary>
+        /// Поле, обозначающие емкость магазина оружия
+        /// </summary>
+        private int _ammoCapacity;
+
+
+        /// <summary>
+        /// Поле обозначающее текущее количество боеприпасов в оружии
+        /// </summary>
+
+        private int _currentCapacity;
+
+        
+
+        /// <summary>
+        /// Getter для поля parAmmoCapacity
+        /// </summary>
+
+
+        public int AmmoCapacity { get { return this._ammoCapacity; } }
+
+        /// <summary>
+        /// Getter для поля _currentCapacity
+        /// </summary>
+
+        public int CurentCapacity { get { return this._currentCapacity; } }
+
+   
+
+        /// <summary>
+        /// Getter для поля parFireRate
+        /// </summary>
+        public int FireRate { get { return this._fireRate; } }
 
         /// <summary>
         /// Конструктр для класса FireArm
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
-        /// <param name="fireRate"></param>
-        /// <param name="caliber"></param>
-        /// <param name="ammoCapacity"></param>
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parFireRate"></param>
+        /// <param name="parCaliber"></param>
+        /// <param name="parAmmoCapacity"></param>
+        /// <param name="parDegreeOfDanger"></param>
 
-        public Firearm(string weaponName, double weight, int fireRate, Caliber caliber, int ammoCapacity) : base(weaponName, weight)
+        public Firearm(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
-            this.fireRate = fireRate;
-            this.ammoCapacity = ammoCapacity;
-            this.currentCapacity = ammoCapacity;
-            this.caliber = caliber;
+            this._fireRate = parFireRate;
+            this._ammoCapacity = parAmmoCapacity;
+            this._currentCapacity = parAmmoCapacity;
+            this._caliber = parCaliber;
         }
 
 
         /// <summary>
         /// Метод выполения выстрела из оружия
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="parTarget"></param>
 
        
-        public virtual void Shoot(String target)
+        public virtual string Shoot(String parTarget)
         {
-            if (this.currentCapacity > 0)
+            if (this._currentCapacity > 0)
             {
-                Console.Write("Shoot to" + target);
-                this.currentCapacity--;
+                this._currentCapacity--;
+                return $"Shoot to {parTarget}";
             }
             else
             {
-                Console.Write("No ammo");
+                return "No ammo";
             }
         }
 
@@ -95,17 +98,16 @@ namespace WeaponsLib
 
         public void Reload()
         { 
-            this.currentCapacity = ammoCapacity; 
+            this._currentCapacity = _ammoCapacity; 
         }
 
         /// <summary>
         /// Переопределенный метод оценки урона, учитывающий темп стрельбы и калибр оружия
         /// </summary>
-        /// <param name="damage"></param>
         /// <returns></returns>
-        public override double GetDamage(double damage)
+        public override double GetDamage()
         {
-            return fireRate * caliber.CaliberDamage;
+            return base.GetDamage() * _fireRate * _caliber.CaliberDamage;
         }
 
 
@@ -115,8 +117,7 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString() + "Caliber " + caliber + "Fire Rate " + fireRate + "Ammo capacity "
-                + ammoCapacity + "Current capacity " + currentCapacity;
+            return string.Format("{0}, Caliber: {1}, Fire Rate: {2}, Ammo capacity: {3}, Current capacity: {4}", base.ToString(), _caliber, _fireRate, _ammoCapacity, _currentCapacity);
         }
     }
 }

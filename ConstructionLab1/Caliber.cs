@@ -12,41 +12,41 @@ namespace WeaponsLib
         /// <summary>
         /// Поле класса, обозначающее наименование калибра оружия
         /// </summary>
-        private string caliberName;
+        private string _caliberName;
 
         /// <summary>
         /// Поле класса, обозначающее урон от калибра
         /// </summary>
 
-        private Double caliberDamage;
+        private double _caliberDamage;
 
         /// <summary>
         /// Конструктор класса Caliber
         /// </summary>
-        /// <param name="caliberName"></param>
-        /// <param name="caliberDamage"></param>
-        public Caliber(String caliberName, Double caliberDamage)
+        /// <param name="parCaliberName"></param>
+        /// <param name="parCaliberDamage"></param>
+        public Caliber(string parCaliberName, double parCaliberDamage)
         {
-            this.caliberName = caliberName;
-            this.caliberDamage = caliberDamage;
+            this._caliberName = parCaliberName;
+            this._caliberDamage = parCaliberDamage;
         }
 
         /// <summary>
         /// Getter and setter
         /// </summary>
-        public String CaliberName
+        public string CaliberName
         {
-            get { return this.caliberName; }
-            set { this.caliberName = value; }
+            get { return this._caliberName; }
+            set { this._caliberName = value; }
         }
 
         /// <summary>
         /// Getter and setter
         /// </summary>
 
-        public Double CaliberDamage {
-            get { return this.caliberDamage; } 
-            set { this.caliberDamage= value; }
+        public double CaliberDamage {
+            get { return this._caliberDamage; } 
+            set { this._caliberDamage= value; }
         }
     }
 }

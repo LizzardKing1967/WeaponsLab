@@ -17,36 +17,51 @@ namespace WeaponsLib
         /// Поле наименование оружия
         /// </summary>
 
-        private string weaponName;
+        private string _weaponName;
 
-        public string WeaponName { get { return weaponName; } }
+        /// <summary>
+        /// Поле, обозначающее степень опасности оружия
+        /// </summary>
+        private double _degreeOfDanger;
+
 
         /// <summary>
         /// Поле в котором хранится вес оружия
         /// </summary>
 
-        
-        private double weight;
 
-        public double Weight { get { return weight; } }
+        private double _weight;
+
 
         /// <summary>
-        /// Поле обозначающее урон от оружия
+        /// Getter для поля parWeaponName
         /// </summary>
+        public string WeaponName { get { return _weaponName; } }
 
-        private double damage;
+        /// <summary>
+        /// Getter для поля parDegreeOfDanger
+        /// </summary>
+        public double DegreeOfDanger {get { return _degreeOfDanger; } }
+
+        /// <summary>
+        /// Getter для поля parWeight
+        /// </summary>
+        public double Weight { get { return _weight; } }
+
 
         /// <summary>
         /// Конструктр базового класса Weapon
         /// </summary>
-        /// <param name="weaponName"></param>
-        /// <param name="weight"></param>
+        /// <param name="parWeaponName"></param>
+        /// <param name="parWeight"></param>
+        /// <param name="parDegreeOfDanger"></param>
 
-        public Weapon(string weaponName, double weight) 
+        public Weapon(string parWeaponName, double parWeight, double parDegreeOfDanger) 
         {
             Id = Guid.NewGuid();
-            this.weaponName = weaponName;
-            this.weight = weight;
+            this._weaponName = parWeaponName;
+            this._weight = parWeight;
+            this._degreeOfDanger = parDegreeOfDanger;
         }
     
         /// <summary>
@@ -55,18 +70,17 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString ()
         {
-            return "Weapon id = " + Id + "Weapon name = " + weaponName + "Weapon weight = " + weight;
+            return string.Format("Weapon id = {0}, Weapon name = {1}, Weapon parWeight = {2}, Weapon parWeight = {3}", Id, _weaponName, _weight, _degreeOfDanger);
         }
 
         /// <summary>
         /// Метод оценки урона от оружия
         /// </summary>
-        /// <param name="damage"></param>
         /// <returns></returns>
 
-        public virtual double GetDamage(double damage)
+        public virtual double GetDamage()
         {
-            return damage;
+            return _degreeOfDanger;
         }
 
     }
