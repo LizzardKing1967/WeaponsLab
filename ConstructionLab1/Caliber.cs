@@ -10,14 +10,13 @@ namespace WeaponsLib
     {
 
         /// <summary>
-        /// Поле класса, обозначающее наименование калибра оружия
+        /// Наименование калибра оружия
         /// </summary>
         private string _caliberName;
 
         /// <summary>
-        /// Поле класса, обозначающее урон от калибра
+        /// Урон от калибра
         /// </summary>
-
         private double _caliberDamage;
 
         /// <summary>
@@ -43,7 +42,6 @@ namespace WeaponsLib
         /// <summary>
         /// Getter and setter
         /// </summary>
-
         public double CaliberDamage {
             get { return this._caliberDamage; } 
             set { this._caliberDamage= value; }

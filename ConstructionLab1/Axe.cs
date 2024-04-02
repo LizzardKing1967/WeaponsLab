@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс Axe, наследник класса SteelArm
+    /// </summary>
     public class Axe : SteelArm
     {
         /// <summary>
-        /// Поле для класса, обозначающее длину рукоятки топора
+        /// Длина рукоятки топора
         /// </summary>
-
         private int _handleLength;
+
+        /// <summary>
+        /// Getter и Setter для поля _handleLength
+        /// </summary>
+        public int HandleLength { 
+            get { return _handleLength; }
+            set { _handleLength = value; }  
+        }
 
         /// <summary>
         /// Конструктор класса Axe
@@ -32,8 +42,7 @@ namespace WeaponsLib
         /// <summary>
         /// Метод класса, отвечающий за расширение рукоятки топора
         /// </summary>
-        /// <param name="parLength"></param>
-
+        /// <param name="parLength">Длина рукоятки</param>
         public void ExtendHandle(int parLength)
         {
             this._handleLength += parLength;
@@ -43,7 +52,6 @@ namespace WeaponsLib
         /// Переопределенный метод ToString
         /// </summary>
         /// <returns></returns>
-
         public override string ToString()
         {
             return string.Format("{0}, Handle Length: {1} cm", base.ToString(), _handleLength);

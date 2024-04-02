@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс Rifle, наследник класса Firearm
+    /// </summary>
     public class Rifle : Firearm
     {
-        /// <summary>
-        /// Поле класса, обозначающее дистанции стрельбы из винтовки
-        /// </summary>
 
+        /// <summary>
+        /// Дистанция стрельбы из винтовки
+        /// </summary>
         private int _range;
+
+        /// <summary>
+        /// Getter и Setter для поля _range
+        /// </summary>
+        public int Range { 
+            get { return _range; } 
+            set { _range = value; }
+        }
 
         /// <summary>
         /// Конструктр класса Rifle
@@ -24,7 +35,6 @@ namespace WeaponsLib
         /// <param name="parCaliber"></param>
         /// <param name="parAmmoCapacity"></param>
         /// <param name="parRange"></param>
-
         public Rifle(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, int parRange)
             : base(parWeaponName, parWeight, parDegreeOfDanger, parFireRate, parCaliber, parAmmoCapacity)
         {
@@ -33,7 +43,7 @@ namespace WeaponsLib
         /// <summary>
         /// Метод для прицеливания из винтовки, увеличивающий дистанции выстрела
         /// </summary>
-        /// <param name="parFactor"></param>
+        /// <param name="parFactor">Дистанция пристрелки</param>
         public void Zoom(int parFactor)
         {
             _range *= parFactor;

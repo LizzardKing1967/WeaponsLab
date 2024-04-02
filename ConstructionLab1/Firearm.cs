@@ -6,53 +6,57 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс огнестрельного оружия Firearm, наследник класса Weapon
+    /// </summary>
     public class Firearm : Weapon
     {
 
         /// <summary>
-        /// Поле класса, обозначающий темп стрельбы оружия
+        /// Темп стрельбы оружия
         /// </summary>
         private int _fireRate;
 
-
         /// <summary>
-        /// Поле класса Caliber, обозначающее калибр оружия
+        /// Калибр оружия
         /// </summary>
         private Caliber _caliber;
 
         /// <summary>
-        /// Поле, обозначающие емкость магазина оружия
+        /// Ёмкость магазина оружия
         /// </summary>
         private int _ammoCapacity;
 
-
         /// <summary>
-        /// Поле обозначающее текущее количество боеприпасов в оружии
+        /// Текущее количество боеприпасов в оружии
         /// </summary>
-
         private int _currentCapacity;
 
-        
+        /// <summary>
+        /// Getter и Setter для поля _ammoCapacity
+        /// </summary>
+        public int AmmoCapacity { 
+            get { return this._ammoCapacity; } 
+            set { this._ammoCapacity = value;}
+        }
 
         /// <summary>
-        /// Getter для поля parAmmoCapacity
+        /// Getter и Setter для поля _currentCapacity
         /// </summary>
+        public int CurentCapacity { 
+            get { return this._currentCapacity; } 
+            set { this._currentCapacity = value;}
+        }
 
 
-        public int AmmoCapacity { get { return this._ammoCapacity; } }
 
         /// <summary>
-        /// Getter для поля _currentCapacity
+        /// Getter и Setter для поля _fireRate
         /// </summary>
-
-        public int CurentCapacity { get { return this._currentCapacity; } }
-
-   
-
-        /// <summary>
-        /// Getter для поля parFireRate
-        /// </summary>
-        public int FireRate { get { return this._fireRate; } }
+        public int FireRate { 
+            get { return this._fireRate; } 
+            set { this._fireRate = value;}
+        }
 
         /// <summary>
         /// Конструктр для класса FireArm
@@ -63,7 +67,6 @@ namespace WeaponsLib
         /// <param name="parCaliber"></param>
         /// <param name="parAmmoCapacity"></param>
         /// <param name="parDegreeOfDanger"></param>
-
         public Firearm(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
             this._fireRate = parFireRate;
@@ -72,13 +75,10 @@ namespace WeaponsLib
             this._caliber = parCaliber;
         }
 
-
         /// <summary>
         /// Метод выполения выстрела из оружия
         /// </summary>
-        /// <param name="parTarget"></param>
-
-       
+        /// <param name="parTarget">Цель для выстрела</param>
         public virtual string Shoot(String parTarget)
         {
             if (this._currentCapacity > 0)
@@ -95,7 +95,6 @@ namespace WeaponsLib
         /// <summary>
         /// Метод перезарядки оружия
         /// </summary>
-
         public void Reload()
         { 
             this._currentCapacity = _ammoCapacity; 

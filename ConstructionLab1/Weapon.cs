@@ -6,51 +6,59 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+
+    /// <summary>
+    /// Базовый класс для ручного оружия
+    /// </summary>
     public class Weapon
     {
         /// <summary>
-        /// Поле - идентификатор класса
+        /// Идентификатор класса
         /// </summary>
-        private Guid Id;
+        private Guid _Id;
 
         /// <summary>
-        /// Поле наименование оружия
+        /// Наименование оружия
         /// </summary>
-
         private string _weaponName;
 
         /// <summary>
-        /// Поле, обозначающее степень опасности оружия
+        /// Степень опасности оружия
         /// </summary>
         private double _degreeOfDanger;
 
-
         /// <summary>
-        /// Поле в котором хранится вес оружия
+        /// Вес оружия
         /// </summary>
-
-
         private double _weight;
 
-
         /// <summary>
-        /// Getter для поля parWeaponName
+        /// Getter и Setter для поля _weaponName
         /// </summary>
-        public string WeaponName { get { return _weaponName; } }
+        public string WeaponName { 
+            get { return _weaponName; }
+            set { _weaponName = value; }
+        }
 
         /// <summary>
-        /// Getter для поля parDegreeOfDanger
+        /// Getter и Setter для поля _degreeOfDanger
         /// </summary>
-        public double DegreeOfDanger {get { return _degreeOfDanger; } }
+        public double DegreeOfDanger {
+            get { return _degreeOfDanger; } 
+            set { _degreeOfDanger = value;}
+        }
 
         /// <summary>
-        /// Getter для поля parWeight
+        /// Getter и Setter для поля _weight
         /// </summary>
-        public double Weight { get { return _weight; } }
+        public double Weight { 
+            get { return _weight; } 
+            set { _weight = value; }
+        }
 
 
         /// <summary>
-        /// Конструктр базового класса Weapon
+        /// Конструктор базового класса Weapon
         /// </summary>
         /// <param name="parWeaponName"></param>
         /// <param name="parWeight"></param>
@@ -58,7 +66,7 @@ namespace WeaponsLib
 
         public Weapon(string parWeaponName, double parWeight, double parDegreeOfDanger) 
         {
-            Id = Guid.NewGuid();
+            _Id = Guid.NewGuid();
             this._weaponName = parWeaponName;
             this._weight = parWeight;
             this._degreeOfDanger = parDegreeOfDanger;
@@ -70,14 +78,13 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString ()
         {
-            return string.Format("Weapon id = {0}, Weapon name = {1}, Weapon parWeight = {2}, Weapon parWeight = {3}", Id, _weaponName, _weight, _degreeOfDanger);
+            return string.Format("Weapon id = {0}, Weapon name = {1}, Weapon parWeight = {2}, Weapon parWeight = {3}", _Id, _weaponName, _weight, _degreeOfDanger);
         }
 
         /// <summary>
         /// Метод оценки урона от оружия
         /// </summary>
         /// <returns></returns>
-
         public virtual double GetDamage()
         {
             return _degreeOfDanger;

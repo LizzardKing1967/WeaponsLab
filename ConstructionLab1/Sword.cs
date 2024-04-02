@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс Sword, наследник класса SteelArm
+    /// </summary>
     public class Sword : SteelArm
     {
 
         /// <summary>
-        /// Поле класса, указывающие, зачарован ли меч
+        /// Зачарован ли меч
         /// </summary>
         private bool _isEnchanted;
+
+        /// <summary>
+        /// Getter и Setter для поля _isEnchanted
+        /// </summary>
+        public bool IsEnchanted
+        {
+            get { return _isEnchanted; } 
+            set { _isEnchanted = value;}
+        }
 
         /// <summary>
         /// Конструктр класса Sword
@@ -42,6 +54,7 @@ namespace WeaponsLib
         {
             return string.Format("{0}, Is Enchanted: {1}", base.ToString(), _isEnchanted);
         }
+
         /// <summary>
         /// Переопрделенный метод оценки урона, учитывающий зачарование меча
         /// </summary>

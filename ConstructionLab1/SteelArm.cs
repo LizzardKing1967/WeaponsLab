@@ -6,31 +6,37 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс холодного оружия SteealArm, наследник от класа Weapon
+    /// </summary>
     public class SteelArm : Weapon
     {
 
         /// <summary>
-        /// Поле класса, обозначающий скорость удара холодным оружием
+        /// Скорость удара холодным оружием
         /// </summary>
-
         private double _strikeRate;
        
         /// <summary>
-        /// Поле ккласса, обозначающее степень заточки оружия
+        /// Степень заточки оружия
         /// </summary>
-
         private double _degreeOfSharpening;
 
         /// <summary>
-        /// Getter для поля parDegreeOfSharpening
+        /// Getter и Setter для поля _degreeOfSharpening
         /// </summary>
-
-        public double DegreeOfSharpening { get { return this._degreeOfSharpening; } }
+        public double DegreeOfSharpening {
+            get { return this._degreeOfSharpening; } 
+            set { _degreeOfSharpening = value; }
+        }
 
         /// <summary>
-        /// Getter для поля parStrikeRate
+        /// Getter и Setter для поля _strikeRate
         /// </summary>
-        public double StrikeRate { get { return this._strikeRate; } }
+        public double StrikeRate { 
+            get { return this._strikeRate; } 
+            set { this._strikeRate = value; }
+        }
 
         /// <summary>
         /// Конструктр для класса SteelArm
@@ -50,7 +56,7 @@ namespace WeaponsLib
         /// <summary>
         /// Метод удара холодным оружием по цели
         /// </summary>
-        /// <param name="parTarget"></param>
+        /// <param name="parTarget">Цель для удара</param>
         public virtual string Strike(String parTarget)
         {
             if (this._degreeOfSharpening > 0)
@@ -71,6 +77,7 @@ namespace WeaponsLib
         {
             this._degreeOfSharpening ++;
         }
+
         /// <summary>
         /// Переопределенный метод ToString
         /// </summary>
