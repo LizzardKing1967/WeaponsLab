@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WeaponsLib
 {
+    /// <summary>
+    /// Класс калибра оружия
+    /// </summary>
     public class Caliber
     {
 

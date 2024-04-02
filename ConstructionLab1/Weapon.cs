@@ -15,7 +15,7 @@ namespace WeaponsLib
         /// <summary>
         /// Идентификатор класса
         /// </summary>
-        private Guid _Id;
+        private Guid _id;
 
         /// <summary>
         /// Наименование оружия
@@ -66,7 +66,7 @@ namespace WeaponsLib
 
         public Weapon(string parWeaponName, double parWeight, double parDegreeOfDanger) 
         {
-            _Id = Guid.NewGuid();
+            _id = Guid.NewGuid();
             this._weaponName = parWeaponName;
             this._weight = parWeight;
             this._degreeOfDanger = parDegreeOfDanger;
@@ -78,7 +78,7 @@ namespace WeaponsLib
         /// <returns></returns>
         public override string ToString ()
         {
-            return string.Format("Weapon id = {0}, Weapon name = {1}, Weapon parWeight = {2}, Weapon parWeight = {3}", _Id, _weaponName, _weight, _degreeOfDanger);
+            return string.Format("Weapon id = {0}, Weapon name = {1}, Weapon parWeight = {2}, Weapon parWeight = {3}", _id, _weaponName, _weight, _degreeOfDanger);
         }
 
         /// <summary>
