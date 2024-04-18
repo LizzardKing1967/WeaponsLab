@@ -5,6 +5,11 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeponesLib", "ConstructionLab1\WeponesLib.csproj", "{F4264628-F999-4511-BBE6-92BC0C9D68C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Lab2\Client.csproj", "{C28EF55A-136D-40AC-9D45-F405395E28DA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F4264628-F999-4511-BBE6-92BC0C9D68C7} = {F4264628-F999-4511-BBE6-92BC0C9D68C7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{F4264628-F999-4511-BBE6-92BC0C9D68C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4264628-F999-4511-BBE6-92BC0C9D68C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4264628-F999-4511-BBE6-92BC0C9D68C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28EF55A-136D-40AC-9D45-F405395E28DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28EF55A-136D-40AC-9D45-F405395E28DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28EF55A-136D-40AC-9D45-F405395E28DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28EF55A-136D-40AC-9D45-F405395E28DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
