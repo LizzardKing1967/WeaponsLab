@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeponesLib", "ConstructionLab1\WeponesLib.csproj", "{F4264628-F999-4511-BBE6-92BC0C9D68C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeaponsLib", "ConstructionLab1\WeaponsLib.csproj", "{F4264628-F999-4511-BBE6-92BC0C9D68C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Lab2\Client.csproj", "{C28EF55A-136D-40AC-9D45-F405395E28DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Lab2\Client.csproj", "{C28EF55A-136D-40AC-9D45-F405395E28DA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F4264628-F999-4511-BBE6-92BC0C9D68C7} = {F4264628-F999-4511-BBE6-92BC0C9D68C7}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{948759DF-DD6E-4D32-845B-3A43636BEC09}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

@@ -1,25 +1,20 @@
-﻿using System.Windows;
+﻿using WeaponsLib;
+using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
 
-        private void ButtonAddSword_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonAddAxe_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

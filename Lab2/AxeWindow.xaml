@@ -1,0 +1,34 @@
+﻿<Window x:Class="Client.AxeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client.ViewModel"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="450" Width="800">
+    <Grid>
+
+   
+
+    
+        <StackPanel Margin="10">
+            <!-- Здесь размещаются поля для редактирования параметров топора -->
+            <TextBlock Text="Weapon Name:"/>
+            <TextBox Text="{Binding WeaponName}"/>
+            <TextBlock Text="Weight:"/>
+            <TextBox Text="{Binding Weight}"/>
+            <TextBlock Text="Degree Of Danger:"/>
+            <TextBox Text="{Binding DegreeOfDanger}"/>
+            <TextBlock Text="Strike Rate:"/>
+            <TextBox Text="{Binding StrikeRate}"/>
+            <TextBlock Text="Degree Of Sharpening:"/>
+            <TextBox Text="{Binding DegreeOfSharpening}"/>
+            <TextBlock Text="Handle Length:"/>
+            <TextBox Text="{Binding HandleLength}"/>
+
+            <!-- Кнопка для выполнения действия -->
+            <Button Content="{Binding ButtonText}" Command="{Binding ActionCommand}"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
