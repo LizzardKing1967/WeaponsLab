@@ -39,13 +39,13 @@ namespace WeaponsLib
         }
 
         /// <summary>
-        /// Конструктр для класса SteelArm
+        /// Конструктор для класса SteelArm
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
-        /// <param name="parStrikeRate"></param>
-        /// <param name="parDegreeOfSharpening"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Степень опасности оружия</param>
+        /// <param name="parStrikeRate">Скорость удара</param>
+        /// <param name="parDegreeOfSharpening">Степень заточки/param>
         public SteelArm(string parWeaponName, double parWeight, double parDegreeOfDanger, double parStrikeRate, double parDegreeOfSharpening) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
             this._strikeRate = parStrikeRate;

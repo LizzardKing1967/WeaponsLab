@@ -28,13 +28,13 @@ namespace WeaponsLib
         /// <summary>
         /// Конструктор класса Pistol
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
-        /// <param name="parFireRate"></param>
-        /// <param name="parCaliber"></param>
-        /// <param name="parAmmoCapacity"></param>
-        /// <param name="parHasSafety"></param>
+        /// <param name="parWeaponName">Название пистолета</param>
+        /// <param name="parWeight">Вес пистолета</param>
+        /// <param name="parDegreeOfDanger">Степень опасности пистолета</param>
+        /// <param name="parFireRate">Скорострельность</param>
+        /// <param name="parCaliber">Калибр пистолета</param>
+        /// <param name="parAmmoCapacity">Емкость магазина</param>
+        /// <param name="parHasSafety">Наличие предохранителя</param>
         public Pistol(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, bool parHasSafety) : base(parWeaponName, parWeight, parDegreeOfDanger,parFireRate, parCaliber, parAmmoCapacity)
         {
             this._hasSafety = parHasSafety;

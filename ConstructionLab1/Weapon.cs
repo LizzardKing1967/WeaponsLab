@@ -66,9 +66,9 @@ namespace WeaponsLib
         /// <summary>
         /// Конструктор базового класса Weapon
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Опасность оружия</param>
 
         public Weapon(string parWeaponName, double parWeight, double parDegreeOfDanger) 
         {

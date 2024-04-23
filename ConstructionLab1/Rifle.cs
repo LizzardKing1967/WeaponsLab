@@ -26,15 +26,15 @@ namespace WeaponsLib
         }
 
         /// <summary>
-        /// Конструктр класса Rifle
+        /// Конструктор класса Rifle
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
-        /// <param name="parFireRate"></param>
-        /// <param name="parCaliber"></param>
-        /// <param name="parAmmoCapacity"></param>
-        /// <param name="parRange"></param>
+        /// <param name="parWeaponName">Название винтовки</param>
+        /// <param name="parWeight">Вес винтовки</param>
+        /// <param name="parDegreeOfDanger">Степень опасности винтовки</param>
+        /// <param name="parFireRate">Скорострельность</param>
+        /// <param name="parCaliber">Калибр винтовки</param>
+        /// <param name="parAmmoCapacity">Емкость магазина</param>
+        /// <param name="parRange">Дальность стрельбы</param>
         public Rifle(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, int parRange)
             : base(parWeaponName, parWeight, parDegreeOfDanger, parFireRate, parCaliber, parAmmoCapacity)
         {

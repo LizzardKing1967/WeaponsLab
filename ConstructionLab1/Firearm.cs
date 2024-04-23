@@ -63,14 +63,14 @@ namespace WeaponsLib
         }
 
         /// <summary>
-        /// Конструктр для класса FireArm
+        /// Конструктор для класса Firearm
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parFireRate"></param>
-        /// <param name="parCaliber"></param>
-        /// <param name="parAmmoCapacity"></param>
-        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Степень опасности оружия</param>
+        /// <param name="parFireRate">Скорострельность</param>
+        /// <param name="parCaliber">Калибр</param>
+        /// <param name="parAmmoCapacity">Емкость боезапаса</param>
         public Firearm(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
             this._fireRate = parFireRate;

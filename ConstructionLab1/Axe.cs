@@ -27,12 +27,12 @@ namespace WeaponsLib
         /// <summary>
         /// Конструктор класса Axe
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parStrikeRate"></param>
-        /// <param name="parDegreeOfSharpening"></param>
-        /// <param name="parHandleLength"></param>
-        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Опасность оружия</param>
+        /// <param name="parStrikeRate">Скорость удара</param>
+        /// <param name="parDegreeOfSharpening">Степень заточки</param>
+        /// <param name="parHandleLength">Длина рукояти</param>
         public Axe(string parWeaponName, double parWeight, double parDegreeOfDanger, double parStrikeRate, double parDegreeOfSharpening, int parHandleLength)
             : base(parWeaponName, parWeight, parDegreeOfDanger ,parStrikeRate, parDegreeOfSharpening)
         {

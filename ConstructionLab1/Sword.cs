@@ -25,15 +25,14 @@ namespace WeaponsLib
             get { return _isEnchanted; } 
             set { _isEnchanted = value;}
         }
-
         /// <summary>
-        /// Конструктр класса Sword
+        /// Конструктор для класса Sword
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parStrikeRate"></param>
-        /// <param name="parDegreeOfSharpening"></param>
-        /// <param name="parIsEnchanted"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parStrikeRate">Скорость удара</param>
+        /// <param name="parDegreeOfSharpening">Степень заточки</param>
+        /// <param name="parIsEnchanted">Флаг, указывающий, зачаровано ли оружие</param>
         public Sword(string parWeaponName, double parWeight, double parDegreeOfDanger, double parDegreeOfSharpening, double parStrikeRate, bool parIsEnchanted)
             : base(parWeaponName, parWeight, parDegreeOfDanger, parStrikeRate, parDegreeOfSharpening)
         {
