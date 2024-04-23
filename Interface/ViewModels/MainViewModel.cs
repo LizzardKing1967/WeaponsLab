@@ -141,6 +141,11 @@ namespace Interface
             SwordView swordView = new SwordView();
             swordView.DataContext = swordActionViewModel;
             swordView.ShowDialog();
+
+            if (swordActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            {
+                SelectedWeapon = Weapons.LastOrDefault();
+            }
         }
 
         /// <summary>
@@ -152,6 +157,10 @@ namespace Interface
             AxeWindow axeActionView = new AxeWindow();
             axeActionView.DataContext = axeActionViewModel;
             axeActionView.ShowDialog();
+            if (axeActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            {
+                SelectedWeapon = Weapons.LastOrDefault();
+            }
         }
 
         /// <summary>
@@ -163,6 +172,10 @@ namespace Interface
             RifleView rifleView = new RifleView();
             rifleView.DataContext = rifleActionViewModel;
             rifleView.ShowDialog();
+            if (rifleActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            {
+                SelectedWeapon = Weapons.LastOrDefault();
+            }
         }
 
         /// <summary>
@@ -170,10 +183,14 @@ namespace Interface
         /// </summary>
         private void AddPistol()
         {
-            PistolActionViewModel pistolViewModel = new PistolActionViewModel(OperationMode.Add, _weaponModel);
+            PistolActionViewModel pistolActionViewModel = new PistolActionViewModel(OperationMode.Add, _weaponModel);
             PistolWindow pistolWindow = new PistolWindow();
-            pistolWindow.DataContext = pistolViewModel;
+            pistolWindow.DataContext = pistolActionViewModel;
             pistolWindow.ShowDialog();
+            if (pistolActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            {
+                SelectedWeapon = Weapons.LastOrDefault();
+            }
         }
 
         /// <summary>

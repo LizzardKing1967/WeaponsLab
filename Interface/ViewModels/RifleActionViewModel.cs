@@ -146,6 +146,7 @@ namespace Interface.ViewModel
                     break;
             }
             CloseWindow();
+            ActionCompleted = true;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace Interface
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
+        private bool _actionCompleted;
+
         /// <summary>
         /// Инициализирует новый экземпляр класса ViewModelBase.
         /// </summary>
@@ -52,6 +54,19 @@ namespace Interface
         /// </summary>
         protected virtual void OnDispose()
         {
+        }
+
+        /// <summary>
+        /// Указывает, было ли успешно выполнено действие.
+        /// </summary>
+        public bool ActionCompleted
+        {
+            get { return _actionCompleted; }
+            set
+            {
+                _actionCompleted = value;
+                OnPropertyChanged(nameof(ActionCompleted));
+            }
         }
     }
 }

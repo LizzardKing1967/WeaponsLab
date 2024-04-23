@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Interface"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="{Binding WindowTitle}" Height="626" Width="800">
+        Title="{Binding Path=WindowTitle, StringFormat='{}{0} топора'}" Height="626" Width="800">
 
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}">
@@ -71,6 +71,7 @@
             <Button x:Name="ButtonCansel" Content="Отмена" IsCancel="True"/>
         </StackPanel>
     </Grid>
+
 
 </Window>
 

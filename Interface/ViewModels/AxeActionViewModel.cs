@@ -117,6 +117,7 @@ namespace Interface
                     _weaponRepository.AddWeapon(_weapon);
                     break;
             }
+            ActionCompleted = true;
             CloseWindow();
         }
     }
