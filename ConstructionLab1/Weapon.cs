@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +16,7 @@ namespace WeaponsLib
         /// Идентификатор класса
         /// </summary>
         private Guid _id;
+
 
         /// <summary>
         /// Наименование оружия
@@ -39,6 +40,11 @@ namespace WeaponsLib
             get { return _weaponName; }
             set { _weaponName = value; }
         }
+
+        //public Guid Id
+        //{
+        //    get { return _id; }
+        //}
 
         /// <summary>
         /// Getter и Setter для поля _degreeOfDanger

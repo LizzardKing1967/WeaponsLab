@@ -1,5 +1,5 @@
-﻿using Client.ManipulationUtils;
-using Client.Model;
+﻿using Interface.ManipulationUtils;
+using Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,8 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WeaponsLib;
+using Interface.ViewModel;
 
-namespace Client
+namespace Interface
 {
     class MainViewModel : ViewModelBase
     {
@@ -70,7 +71,7 @@ namespace Client
 
         private void AddAxe()
         {
-            AxeActionViewModel axeActionViewModel = new AxeActionViewModel("Add Axe", "Add", _weaponModel);
+            AxeActionViewModel axeActionViewModel = new AxeActionViewModel(OperationMode.Add, _weaponModel);
             AxeView axeActionView = new AxeView();
             axeActionView.DataContext = axeActionViewModel;
             axeActionView.ShowDialog();
@@ -110,11 +111,19 @@ namespace Client
 
         private void DeleteWeapon()
         {
+            if (SelectedWeapon != null)
+            {
+                Type weaponType = SelectedWeapon.GetType();
+                if (_editors.TryGetValue(weaponType, out WeaponEditor editor))
+                {
+                    editor.Delete(SelectedWeapon);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported weapon type");
+                }
+            }
 
-         
-
-
-            
         }
         private void GenerateTestData()
         {

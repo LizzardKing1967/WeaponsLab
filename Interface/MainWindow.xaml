@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <WrapPanel  Grid.Row="0" Margin="5">
             <Button Content="Добавить меч" Command="{Binding AddSwordCommand}"/>
-            <Button Content="Добавить боевой топор" Command="{Binding AddAxeCommand}"/>
+            <Button Content="Добавить топор" Command="{Binding AddAxeCommand}"/>
             <Button Content="Добавить винтовку" Command="{Binding AddRifleCommand}"/>
             <Button Content="Добавить пистолет" Command="{Binding AddPistolCommand}"/>
             <Button Content="Изменить" Command="{Binding EditCommand}" IsEnabled="{Binding IsItemSelected}"/>
@@ -29,12 +29,10 @@
 
         <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}" 
           IsReadOnly="True" HorizontalGridLinesBrush="Black" 
-          RowBackground="LightGray" AlternatingRowBackground="White"
+          RowBackground="LightGray" AlternatingRowBackground="LightGray"
           RowHeight="25" AutoGenerateColumns="True"
           AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
-
-
-        <DataGrid.ContextMenu>
+            <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Добавить">
                         <MenuItem Header="Меч" Command="{Binding AddSwordCommand}"/>

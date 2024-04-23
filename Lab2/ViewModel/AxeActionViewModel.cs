@@ -1,4 +1,6 @@
-﻿using Client.Model;
+﻿using Interface.ManipulationUtils;
+using Interface.Model;
+using Interface.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WeaponsLib;
 
-namespace Client
+namespace Interface
 {
     class AxeActionViewModel : ViewModelBase
     {
@@ -26,10 +28,28 @@ namespace Client
         double _strikeRate; 
 
         double _degreeOfSharpening;
-        
+
+        OperationMode _operationMode;
+
         int _handleLength;
         public string WindowTitle { get; }
         public string ButtonText { get; }
+
+        private bool _isEditable = true;
+        public bool IsEditable
+        {
+            get { return _isEditable; }
+            set
+            {
+                _isEditable = value;
+                OnPropertyChanged(nameof(IsEditable));
+            }
+        }
+        public OperationMode CurrentMode
+        {
+            get { return _operationMode; }
+            set { _operationMode = value; }
+        }
 
 
         public string WeaponName
@@ -86,8 +106,7 @@ namespace Client
         {
             get { return _handleLength; }
             set
-            {
-               
+            { 
                 _handleLength = value;
                 OnPropertyChanged(nameof(HandleLength));
                 
@@ -97,10 +116,11 @@ namespace Client
 
         public ICommand ActionCommand { get; }
 
-        public AxeActionViewModel(Axe axe, string windowTitle, string buttonText, WeaponRepository weaponRepository)
+        public AxeActionViewModel(Axe axe, OperationMode operationMode , WeaponRepository weaponRepository)
         {
+            CurrentMode = operationMode;
             if (axe != null)
-            {
+            {   
                 _axe = axe;
                 WeaponName = axe.WeaponName;
                 Weight = axe.Weight;
@@ -110,44 +130,54 @@ namespace Client
                 HandleLength = axe.HandleLength;
             }
 
-            WindowTitle = windowTitle;
-            ButtonText = buttonText;
+            WindowTitle = OperationModeTranslator.GetNameOperationModeForTitle(operationMode);
+            ButtonText = OperationModeTranslator.GetNameOperationModeForButton(operationMode); 
 
             // Инициализация команды
             ActionCommand = new RelayCommand(Action);
             _weaponRepository = weaponRepository;
+            IsEditable = CurrentMode != OperationMode.Delete;
         }
 
-        public AxeActionViewModel(string windowTitle, string buttonText, WeaponRepository weaponRepository)
+        public AxeActionViewModel(OperationMode operationMode, WeaponRepository weaponRepository)
         {
 
-            WindowTitle = windowTitle;
-            ButtonText = buttonText;
+            WindowTitle = OperationModeTranslator.GetNameOperationModeForTitle(operationMode); 
+            ButtonText = OperationModeTranslator.GetNameOperationModeForButton(operationMode); 
 
-            // Инициализация команды
+    
             ActionCommand = new RelayCommand(Action);
             _weaponRepository = weaponRepository;
         }
 
         private void Action()
         {
-            // Логика для добавления топора
-            // Создаем новый экземпляр топора на основе введенных данных
-            _axe = new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate,DegreeOfSharpening,HandleLength);
-            _weaponRepository.AddWeapon(_axe);
+            switch (CurrentMode)
+            {
+                case OperationMode.Edit:
+                    _weaponRepository.EditWeapon(_axe, new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength));
+                    break;
+                case OperationMode.Delete:
+                    _weaponRepository.RemoveWeapon(_axe);
+                    break;
+                case OperationMode.Add:
+                    _axe = new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength);
+                    _weaponRepository.AddWeapon(_axe);
+                    break;
+            }
             CloseWindow();
         }
 
         private void CloseWindow()
         {
-            // Получаем ссылку на текущее окно
             System.Windows.Window window = System.Windows.Application.Current.Windows.OfType<System.Windows.Window>().SingleOrDefault(w => w.DataContext == this);
             if (window != null)
             {
-                // Закрываем окно
                 window.Close();
             }
         }
+
+
 
     }
 }

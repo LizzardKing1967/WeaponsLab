@@ -49,5 +49,10 @@ namespace WeaponsLib
             get { return this._caliberDamage; } 
             set { this._caliberDamage= value; }
         }
+
+        public override string ToString()
+        {
+            return this._caliberName;
+        }
     }
 }

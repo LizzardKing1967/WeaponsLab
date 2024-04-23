@@ -1,4 +1,4 @@
-﻿using Client.Model;
+﻿using Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponsLib;
 
-namespace Client.ManipulationUtils
+namespace Interface.ManipulationUtils
 {
     internal class RifleEditor : WeaponEditor
     {
@@ -17,7 +17,7 @@ namespace Client.ManipulationUtils
         public override void Delete(Weapon weapon)
         {
             Rifle rifle = (Rifle)weapon;
-            throw new NotImplementedException();
+
         }
 
         public override void Edit(Weapon weapon)

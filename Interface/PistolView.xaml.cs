@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Interface
 {
     /// <summary>
-    /// Логика взаимодействия для AxeView.xaml
+    /// Логика взаимодействия для PistolWindow.xaml
     /// </summary>
-    public partial class AxeView : Window
+    public partial class PistolWindow : Window
     {
-        public AxeView()
+        public PistolWindow()
         {
             InitializeComponent();
         }

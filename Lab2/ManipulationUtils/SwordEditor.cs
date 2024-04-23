@@ -1,4 +1,4 @@
-﻿using Client.Model;
+﻿using Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponsLib;
 
-namespace Client.ManipulationUtils
+namespace Interface.ManipulationUtils
 {
     internal class SwordEditor : WeaponEditor
     {

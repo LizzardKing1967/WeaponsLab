@@ -11,15 +11,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace Interface
 {
     /// <summary>
-    /// Логика взаимодействия для AxeView.xaml
+    /// Логика взаимодействия для AxeWindow.xaml
     /// </summary>
-    public partial class AxeView : Window
+    public partial class AxeWindow : Window
     {
-        public AxeView()
+        public AxeWindow()
         {
             InitializeComponent();
         }

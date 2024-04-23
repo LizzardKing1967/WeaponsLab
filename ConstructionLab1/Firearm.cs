@@ -48,7 +48,11 @@ namespace WeaponsLib
             set { this._currentCapacity = value;}
         }
 
-
+        public Caliber CaliberProperty
+        {
+            get { return this._caliber; }
+            set { this._caliber = value; }
+        }
 
         /// <summary>
         /// Getter и Setter для поля _fireRate

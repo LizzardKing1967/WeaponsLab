@@ -4,14 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace Client
+namespace Interface
 {
     public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         protected ViewModelBase() 
-        { 
-
+        {
+        
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -29,6 +30,7 @@ namespace Client
         {
             this.OnDispose();
         }
+
 
         protected virtual void OnDispose()
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Client
+namespace Interface
 {
     public class RelayCommand : ICommand
     {
@@ -14,6 +14,7 @@ namespace Client
 
         public RelayCommand(Action execute) : this(execute, null)
         {
+
         }
 
         public RelayCommand(Action execute, Func<bool> canExecute)
@@ -21,6 +22,8 @@ namespace Client
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
+
+
 
         public event EventHandler CanExecuteChanged
         {
@@ -38,4 +41,5 @@ namespace Client
             _execute();
         }
     }
-}
+} 
+    
