@@ -22,7 +22,11 @@ namespace WeaponsLib
         /// </summary>
         public int Range { 
             get { return _range; } 
-            set { _range = value; }
+            set 
+            { 
+                _range = value; 
+                OnPropertyChanged(nameof(Range));
+            }
         }
 
         /// <summary>
@@ -55,6 +59,20 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Range: {1} meters", base.ToString(), _range);
+        }
+
+        /// <summary>
+        /// Редактирует поля винтовки на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Rifle? newRifle = newWeapon as Rifle;
+            if (newRifle != null)
+            {
+                this.Range = newRifle.Range;
+            }
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Interface
     public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         private bool _actionCompleted;
-
         /// <summary>
         /// Инициализирует новый экземпляр класса ViewModelBase.
         /// </summary>

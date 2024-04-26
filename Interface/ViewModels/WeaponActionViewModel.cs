@@ -1,4 +1,5 @@
 ﻿using Interface.Model;
+using Interface.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +24,37 @@ namespace Interface.ViewModel
         /// <summary>
         /// Экземпляр оружия.
         /// </summary>
-        protected T _weapon;
+        private T _weapon;
 
         /// <summary>
         /// Название оружия.
         /// </summary>
-        protected string _weaponName;
+        private string _weaponName;
 
         /// <summary>
         /// Вес оружия.
         /// </summary>
-        protected double _weight;
+        private double _weight;
 
         /// <summary>
         /// Степень опасности оружия.
         /// </summary>
-        protected double _degreeOfDanger;
+        private double _degreeOfDanger;
+
+        /// <summary>
+        /// Экземпляр оружия.
+        /// </summary>
+        protected T Weapon
+        {
+            get
+            {
+                return _weapon;
+            }
+            set
+            {
+                _weapon = value;
+            }
+        }
 
         /// <summary>
         /// Список доступных калибров.
@@ -117,7 +133,7 @@ namespace Interface.ViewModel
         /// </summary>
         /// <param name="parOperationMode">Режим выполнения операции.</param>
         /// <param name="parWeaponRepository">Репозиторий оружия.</param>
-        protected WeaponActionViewModelBase(OperationMode parOperationMode, WeaponRepository parWeaponRepository)
+        public WeaponActionViewModelBase(OperationMode parOperationMode, WeaponRepository parWeaponRepository)
         {
             CurrentMode = parOperationMode;
             WindowTitle = OperationModeTranslator.GetNameOperationModeForTitle(parOperationMode);
@@ -133,13 +149,13 @@ namespace Interface.ViewModel
         /// <param name="parWeapon">Оружие.</param>
         /// <param name="parOperationMode">Режим выполнения операции.</param>
         /// <param name="parWeaponRepository">Репозиторий оружия.</param>
-        protected WeaponActionViewModelBase(T parWeapon, OperationMode parOperationMode, WeaponRepository parWeaponRepository)
+        public WeaponActionViewModelBase(T parWeapon, OperationMode parOperationMode, WeaponRepository parWeaponRepository)
             : this(parOperationMode, parWeaponRepository)
         {
             CurrentMode = parOperationMode;
             if (parWeapon != null)
             {
-                _weapon = parWeapon;
+                Weapon = parWeapon;
                 WeaponName = parWeapon.WeaponName;
                 Weight = parWeapon.Weight;
                 DegreeOfDanger = parWeapon.DegreeOfDanger;

@@ -23,7 +23,11 @@ namespace WeaponsLib
         public bool IsEnchanted
         {
             get { return _isEnchanted; } 
-            set { _isEnchanted = value;}
+            set 
+            { 
+                _isEnchanted = value;
+                OnPropertyChanged(nameof(IsEnchanted));
+            }
         }
         /// <summary>
         /// Конструктор для класса Sword
@@ -65,6 +69,20 @@ namespace WeaponsLib
                 newDamage = newDamage * 1.2;
             }
             return newDamage;
+        }
+
+        /// <summary>
+        /// Редактирует поля меча на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Sword? newSword = newWeapon as Sword;
+            if (newSword != null)
+            {
+                this.IsEnchanted = newSword.IsEnchanted;
+            }
         }
     }
 }

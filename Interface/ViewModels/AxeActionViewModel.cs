@@ -1,5 +1,6 @@
 ﻿using Interface.ManipulationUtils;
 using Interface.Model;
+using Interface.Utils;
 using Interface.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -16,22 +17,22 @@ namespace Interface
     /// <summary>
     /// ViewModel для действий с топором.
     /// </summary>
-    class AxeActionViewModel : WeaponActionViewModelBase<Axe>
+    public class AxeActionViewModel : WeaponActionViewModelBase<Axe>
     {
         /// <summary>
         /// Скорость удара.
         /// </summary>
-        double _strikeRate;
+        private double _strikeRate;
 
         /// <summary>
         /// Степень заточки.
         /// </summary>
-        double _degreeOfSharpening;
+        private double _degreeOfSharpening;
 
         /// <summary>
         /// Длина рукояти.
         /// </summary>
-        int _handleLength; 
+        private int _handleLength; 
 
         /// <summary>
         /// Скорость удара.
@@ -107,14 +108,14 @@ namespace Interface
             switch (CurrentMode)
             {
                 case OperationMode.Edit:
-                    _weaponRepository.EditWeapon(_weapon, new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength));
+                    Weapon.EditWeapon(new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength));
                     break;
                 case OperationMode.Delete:
-                    _weaponRepository.RemoveWeapon(_weapon);
+                    _weaponRepository.RemoveWeapon(Weapon);
                     break;
                 case OperationMode.Add:
-                    _weapon = new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength);
-                    _weaponRepository.AddWeapon(_weapon);
+                    Weapon = new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength);
+                    _weaponRepository.AddWeapon(Weapon);
                     break;
             }
             ActionCompleted = true;

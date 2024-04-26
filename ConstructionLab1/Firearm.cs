@@ -37,7 +37,11 @@ namespace WeaponsLib
         /// </summary>
         public int AmmoCapacity { 
             get { return this._ammoCapacity; } 
-            set { this._ammoCapacity = value;}
+            set 
+            { 
+                this._ammoCapacity = value;
+                OnPropertyChanged(nameof(AmmoCapacity));
+            }
         }
 
         /// <summary>
@@ -45,13 +49,21 @@ namespace WeaponsLib
         /// </summary>
         public int CurentCapacity { 
             get { return this._currentCapacity; } 
-            set { this._currentCapacity = value;}
+            set 
+            { 
+                this._currentCapacity = value;
+                OnPropertyChanged(nameof(CurentCapacity));
+            }
         }
 
         public Caliber CaliberProperty
         {
             get { return this._caliber; }
-            set { this._caliber = value; }
+            set 
+            { 
+                this._caliber = value;
+                OnPropertyChanged(nameof(CaliberProperty));
+            }
         }
 
         /// <summary>
@@ -59,7 +71,11 @@ namespace WeaponsLib
         /// </summary>
         public int FireRate { 
             get { return this._fireRate; } 
-            set { this._fireRate = value;}
+            set 
+            { 
+                this._fireRate = value;
+                OnPropertyChanged(nameof(FireRate));
+            }
         }
 
         /// <summary>
@@ -121,6 +137,20 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Caliber: {1}, Fire Rate: {2}, Ammo capacity: {3}, Current capacity: {4}", base.ToString(), _caliber, _fireRate, _ammoCapacity, _currentCapacity);
+        }
+
+        /// <summary>
+        /// Редактирует поля онестрельного оружия на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Firearm newFirearm = (Firearm)newWeapon;
+            this.CaliberProperty = newFirearm.CaliberProperty;
+            this.FireRate = newFirearm.FireRate;
+            this.AmmoCapacity = newFirearm.AmmoCapacity;
+            this.CurentCapacity = newFirearm.CurentCapacity;
         }
     }
 }

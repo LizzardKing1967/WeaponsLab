@@ -27,7 +27,11 @@ namespace WeaponsLib
         /// </summary>
         public double DegreeOfSharpening {
             get { return this._degreeOfSharpening; } 
-            set { _degreeOfSharpening = value; }
+            set 
+            { 
+                _degreeOfSharpening = value;
+                OnPropertyChanged(nameof(DegreeOfSharpening));
+            }
         }
 
         /// <summary>
@@ -35,7 +39,11 @@ namespace WeaponsLib
         /// </summary>
         public double StrikeRate { 
             get { return this._strikeRate; } 
-            set { this._strikeRate = value; }
+            set 
+            { 
+                this._strikeRate = value; 
+                OnPropertyChanged(nameof(StrikeRate));
+            }
         }
 
         /// <summary>
@@ -85,6 +93,18 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Strike rate: {1}, Degree of sharpening: {2}", base.ToString(), _strikeRate, _degreeOfSharpening);
+        }
+
+        /// <summary>
+        /// Редактирует поля холодного оружия на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            SteelArm newSteelArm = (SteelArm)newWeapon;
+            this.DegreeOfSharpening = newSteelArm.DegreeOfSharpening;
+            this.StrikeRate = newSteelArm.StrikeRate;
         }
 
     }

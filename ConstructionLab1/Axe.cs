@@ -21,7 +21,10 @@ namespace WeaponsLib
         /// </summary>
         public int HandleLength { 
             get { return _handleLength; }
-            set { _handleLength = value; }  
+            set { 
+                _handleLength = value; 
+                OnPropertyChanged(nameof(HandleLength));
+            }  
         }
 
         /// <summary>
@@ -65,6 +68,20 @@ namespace WeaponsLib
         public override double GetDamage()
         {
             return base.GetDamage() * (this._handleLength/100);
+        }
+
+        /// <summary>
+        /// Редактирует поля топора на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Axe? newAxe = newWeapon as Axe;
+            if (newAxe != null)
+            {
+                this.HandleLength = newAxe.HandleLength;
+            }
         }
     }
 }

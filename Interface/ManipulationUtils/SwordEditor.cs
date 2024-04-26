@@ -1,4 +1,5 @@
 ﻿using Interface.Model;
+using Interface.Utils;
 using Interface.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Interface.ManipulationUtils
     /// <summary>
     /// Класс для редактирования и удаления объектов типа Sword.
     /// </summary>
-    internal class SwordEditor : WeaponEditor
+    public class SwordEditor : WeaponEditor
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса SwordEditor с указанным репозиторием оружия.

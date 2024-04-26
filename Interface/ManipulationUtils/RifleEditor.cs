@@ -1,4 +1,5 @@
 ﻿using Interface.Model;
+using Interface.Utils;
 using Interface.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ namespace Interface.ManipulationUtils
     /// <summary>
     /// Класс для редактирования и удаления объектов типа Rifle.
     /// </summary>
-    internal class RifleEditor : WeaponEditor
+    public class RifleEditor : WeaponEditor
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса RifleEditor с указанным репозиторием оружия.
         /// </summary>
-        /// <param name="weaponModel">Репозиторий оружия, который будет использоваться для доступа к данным.</param>
+        /// <param name="parWeaponModel">Репозиторий оружия, который будет использоваться для доступа к данным.</param>
         public RifleEditor(WeaponRepository parWeaponModel) : base(parWeaponModel)
         {
         }

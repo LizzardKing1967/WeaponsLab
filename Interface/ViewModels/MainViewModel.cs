@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WeaponsLib;
 using Interface.ViewModel;
+using Interface.Utils;
 
 namespace Interface
 {
@@ -30,17 +31,12 @@ namespace Interface
         /// <summary>
         /// Репозиторий оружия
         /// </summary>
-        private readonly WeaponRepository _weaponModel; 
-
-        /// <summary>
-        /// Коллекция оружия.
-        /// </summary>
-        public ObservableCollection<Weapon> Weapons => _weaponModel.Weapons;
+        private readonly WeaponRepository _weaponModel;
 
         /// <summary>
         /// Выбранное оружие.
         /// </summary>
-        private Weapon _selectedWeapon;
+        protected Weapon _selectedWeapon;
 
         /// <summary>
         /// Getter и Setter для выбранного оружия.
@@ -55,6 +51,11 @@ namespace Interface
                 OnPropertyChanged(nameof(IsItemSelected));
             }
         }
+
+        /// <summary>
+        /// Коллекция оружия.
+        /// </summary>
+        public ObservableCollection<Weapon> Weapons => _weaponModel.Weapons;
 
         /// <summary>
         /// Возвращает значение, указывающее, выбрано ли какое-либо оружие.
@@ -207,6 +208,7 @@ namespace Interface
                 if (_editors.TryGetValue(weaponType, out WeaponEditor editor))
                 {
                     editor.Edit(SelectedWeapon);
+                    OnPropertyChanged(nameof(Weapons));
                 }
                 else
                 {

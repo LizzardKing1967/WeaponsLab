@@ -42,11 +42,11 @@ namespace Interface.Model
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса WeaponRepository и инициализирует список оружия и калибров.
+        /// Инициализирует новый экземпляр класса _weaponRepository и инициализирует список оружия и калибров.
         /// </summary>
         public WeaponRepository()
         {
-            // Инициализация списка оружия
+            // Инициализация списка оружия и калибра
             Weapons = new ObservableCollection<Weapon>();
             _calibers = new List<Caliber>
             {
@@ -64,20 +64,6 @@ namespace Interface.Model
         public void AddWeapon(Weapon parWeapon)
         {
             Weapons.Add(parWeapon);
-        }
-
-        /// <summary>
-        /// Редактирует существующее оружие в репозитории.
-        /// </summary>
-        /// <param name="parOldWeapon">Старое оружие, которое требуется заменить.</param>
-        /// <param name="parNewWeapon">Новое оружие, которым требуется заменить старое.</param>
-        public void EditWeapon(Weapon parOldWeapon, Weapon parNewWeapon)
-        {
-            int index = Weapons.IndexOf(parOldWeapon);
-            if (index != -1)
-            {
-                Weapons[index] = parNewWeapon;
-            }
         }
 
         /// <summary>

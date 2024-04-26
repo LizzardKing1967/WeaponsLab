@@ -1,5 +1,5 @@
 ﻿using Interface.Model;
-using Interface.ViewModel;
+using Interface.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Interface.ManipulationUtils
     /// <summary>
     /// Класс для редактирования и удаления объектов типа Axe.
     /// </summary>
-    internal class AxeEditor : WeaponEditor
+    public class AxeEditor : WeaponEditor
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса AxeEditor с указанным репозиторием оружия.

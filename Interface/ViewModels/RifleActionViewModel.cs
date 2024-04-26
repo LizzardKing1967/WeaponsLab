@@ -1,4 +1,5 @@
 ﻿using Interface.Model;
+using Interface.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,32 +12,32 @@ namespace Interface.ViewModel
     /// <summary>
     /// ViewModel для действий с винтовкой.
     /// </summary>
-    class RifleActionViewModel : WeaponActionViewModelBase<Rifle>
+    public class RifleActionViewModel : WeaponActionViewModelBase<Rifle>
     {
         /// <summary>
         /// Скорострельность
         /// </summary>
-        int _fireRate;
+        private int _fireRate;
 
         /// <summary>
         /// Вместимость боеприпасов.
         /// </summary>
-        int _ammoCapacity;
+        private int _ammoCapacity;
 
         /// <summary>
         /// Текущая вместимость.
         /// </summary>
-        int _currentCapacity;
+        private int _currentCapacity;
 
         /// <summary>
         /// Калибр
         /// </summary>
-        Caliber _caliber;
+        private Caliber _caliber;
 
         /// <summary>
         /// Дальность пристрелки.
         /// </summary>
-        int _range; 
+        private int _range; 
 
         /// <summary>
         /// Текущая вместимость боеприпасов.
@@ -135,14 +136,14 @@ namespace Interface.ViewModel
             switch (CurrentMode)
             {
                 case OperationMode.Edit:
-                    _weaponRepository.EditWeapon(_weapon, new Rifle(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, Range));
+                    Weapon.EditWeapon(new Rifle(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, Range));
                     break;
                 case OperationMode.Delete:
-                    _weaponRepository.RemoveWeapon(_weapon);
+                    _weaponRepository.RemoveWeapon(Weapon);
                     break;
                 case OperationMode.Add:
-                    _weapon = new Rifle(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, Range);
-                    _weaponRepository.AddWeapon(_weapon);
+                    Weapon = new Rifle(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, Range);
+                    _weaponRepository.AddWeapon(Weapon);
                     break;
             }
             CloseWindow();

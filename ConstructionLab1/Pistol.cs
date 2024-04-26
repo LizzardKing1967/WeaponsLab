@@ -22,7 +22,11 @@ namespace WeaponsLib
         /// </summary>
         public bool HasSafety {  
             get { return _hasSafety; }
-            set { _hasSafety = value; }
+            set 
+            { 
+                _hasSafety = value;
+                OnPropertyChanged(nameof(HasSafety));
+            }
         }
 
         /// <summary>
@@ -70,6 +74,20 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Has Safety: {1}", base.ToString(), _hasSafety);
+        }
+
+        /// <summary>
+        /// Редактирует поля пистолета на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Pistol? newPistol = newWeapon as Pistol;
+            if (newPistol != null)
+            {
+                this.HasSafety = newPistol.HasSafety;
+            }
         }
 
     }
