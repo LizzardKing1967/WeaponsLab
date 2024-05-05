@@ -45,6 +45,23 @@ namespace WeaponsLib
         }
 
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Pistol() : base() 
+        { 
+            this._hasSafety = false;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parPistol">Пистолет, свойства которого нужно копировать</param>
+        public Pistol(Pistol parPistol) : base(parPistol) 
+        {
+            this._hasSafety = parPistol._hasSafety;
+        }
+
+        /// <summary>
         /// Метод, переключающий предохранитель пистолета
         /// </summary>
         public void ToggleSafety()
@@ -88,6 +105,15 @@ namespace WeaponsLib
             {
                 this.HasSafety = newPistol.HasSafety;
             }
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Pistol(this);
         }
 
     }

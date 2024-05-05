@@ -79,6 +79,17 @@ namespace WeaponsLib
         }
 
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Firearm() : base()
+        {
+            this._fireRate = 0;
+            this._ammoCapacity=0;
+            this._currentCapacity=0;
+            this._caliber = new Caliber("Не определен", 0);
+        }
+
+        /// <summary>
         /// Конструктор для класса Firearm
         /// </summary>
         /// <param name="parWeaponName">Название оружия</param>
@@ -93,6 +104,18 @@ namespace WeaponsLib
             this._ammoCapacity = parAmmoCapacity;
             this._currentCapacity = parAmmoCapacity;
             this._caliber = parCaliber;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parFireArm">Огнестрельное оружие, свойства которого нужно копировать</param>
+        public Firearm(Firearm parFireArm) : base(parFireArm)
+        {
+            this._fireRate = parFireArm._fireRate;
+            this._ammoCapacity = parFireArm._ammoCapacity;
+            this._currentCapacity = parFireArm._currentCapacity;
+            this._caliber = parFireArm._caliber;
         }
 
         /// <summary>
@@ -151,6 +174,15 @@ namespace WeaponsLib
             this.FireRate = newFirearm.FireRate;
             this.AmmoCapacity = newFirearm.AmmoCapacity;
             this.CurentCapacity = newFirearm.CurentCapacity;
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Firearm(this);
         }
     }
 }

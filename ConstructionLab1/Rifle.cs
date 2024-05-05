@@ -44,6 +44,24 @@ namespace WeaponsLib
         {
             this._range = parRange;
         }
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Rifle() : base() 
+        {
+            this._range = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parRifle">Винтовка, свойства которой нужно копировать</param>
+        public Rifle(Rifle parRifle) : base(parRifle)
+        {
+            this._range = parRifle._range;
+        }
+
         /// <summary>
         /// Метод для прицеливания из винтовки, увеличивающий дистанции выстрела
         /// </summary>
@@ -73,6 +91,15 @@ namespace WeaponsLib
             {
                 this.Range = newRifle.Range;
             }
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Rifle(this); 
         }
     }
 }

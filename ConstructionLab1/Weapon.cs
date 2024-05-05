@@ -11,7 +11,7 @@ namespace WeaponsLib
     /// <summary>
     /// Базовый класс для ручного оружия
     /// </summary>
-    public class Weapon : INotifyPropertyChanged
+    public abstract class Weapon : INotifyPropertyChanged
     {
         /// <summary>
         /// Идентификатор класса
@@ -78,6 +78,28 @@ namespace WeaponsLib
             }
         }
 
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Weapon()
+        {
+            _id = Guid.NewGuid();
+            this._weaponName = string.Empty;
+            this._degreeOfDanger = 0;
+            this._weight = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parWeapon">Оружие, свойства которого нужно копировать</param>
+        public Weapon(Weapon parWeapon)
+        {
+            this._weaponName = parWeapon.WeaponName;
+            this._degreeOfDanger = parWeapon.DegreeOfDanger;
+            this._weight = parWeapon.Weight;
+        }
+
 
         /// <summary>
         /// Конструктор базового класса Weapon
@@ -134,6 +156,13 @@ namespace WeaponsLib
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// Получить копию объекта
+        /// </summary>
+        /// <returns>Копия</returns>
+        public abstract object Clone();
+    
 
     }
 

@@ -47,6 +47,25 @@ namespace WeaponsLib
         }
 
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public SteelArm() : base()
+        {
+            this._degreeOfSharpening = 0;
+            this._strikeRate = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parSteelArm">Холодное оружие, свойства которого нужно копировать</param>
+        public SteelArm(SteelArm parSteelArm) : base(parSteelArm)
+        {
+            this._degreeOfSharpening = parSteelArm._degreeOfSharpening;
+            this._strikeRate = parSteelArm._strikeRate;
+        }
+
+        /// <summary>
         /// Конструктор для класса SteelArm
         /// </summary>
         /// <param name="parWeaponName">Название оружия</param>
@@ -105,6 +124,15 @@ namespace WeaponsLib
             SteelArm newSteelArm = (SteelArm)newWeapon;
             this.DegreeOfSharpening = newSteelArm.DegreeOfSharpening;
             this.StrikeRate = newSteelArm.StrikeRate;
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new SteelArm(this); 
         }
 
     }

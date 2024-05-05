@@ -43,6 +43,23 @@ namespace WeaponsLib
         }
 
         /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Axe() : base() 
+        {
+            this._handleLength = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parAxe">Топор, свойства которого нужно копировать</param>
+        public Axe(Axe parAxe) : base(parAxe)
+        {
+            this._handleLength = parAxe.HandleLength; 
+        }
+
+        /// <summary>
         /// Метод класса, отвечающий за расширение рукоятки топора
         /// </summary>
         /// <param name="parLength">Длина рукоятки</param>
@@ -82,6 +99,15 @@ namespace WeaponsLib
             {
                 this.HandleLength = newAxe.HandleLength;
             }
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Axe(this);
         }
     }
 }

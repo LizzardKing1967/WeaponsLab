@@ -42,6 +42,24 @@ namespace WeaponsLib
         {
             this._isEnchanted = parIsEnchanted;
         }
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Sword() : base() 
+        {
+            _isEnchanted = false;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parSword">Меч, свойства которого нужно копировать</param>
+        public Sword(Sword parSword) : base(parSword) 
+        {
+            this._isEnchanted = parSword._isEnchanted;
+        }
+
         /// <summary>
         /// Метод позволяющий зачаровать меч
         /// </summary>
@@ -83,6 +101,15 @@ namespace WeaponsLib
             {
                 this.IsEnchanted = newSword.IsEnchanted;
             }
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Sword(this);
         }
     }
 }
