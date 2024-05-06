@@ -37,7 +37,11 @@ namespace WeaponsLib
         /// </summary>
         public int AmmoCapacity { 
             get { return this._ammoCapacity; } 
-            set { this._ammoCapacity = value;}
+            set 
+            { 
+                this._ammoCapacity = value;
+                OnPropertyChanged(nameof(AmmoCapacity));
+            }
         }
 
         /// <summary>
@@ -45,34 +49,73 @@ namespace WeaponsLib
         /// </summary>
         public int CurentCapacity { 
             get { return this._currentCapacity; } 
-            set { this._currentCapacity = value;}
+            set 
+            { 
+                this._currentCapacity = value;
+                OnPropertyChanged(nameof(CurentCapacity));
+            }
         }
 
-
+        public Caliber CaliberProperty
+        {
+            get { return this._caliber; }
+            set 
+            { 
+                this._caliber = value;
+                OnPropertyChanged(nameof(CaliberProperty));
+            }
+        }
 
         /// <summary>
         /// Getter и Setter для поля _fireRate
         /// </summary>
         public int FireRate { 
             get { return this._fireRate; } 
-            set { this._fireRate = value;}
+            set 
+            { 
+                this._fireRate = value;
+                OnPropertyChanged(nameof(FireRate));
+            }
         }
 
         /// <summary>
-        /// Конструктр для класса FireArm
+        /// Конструктор по умолчанию
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parFireRate"></param>
-        /// <param name="parCaliber"></param>
-        /// <param name="parAmmoCapacity"></param>
-        /// <param name="parDegreeOfDanger"></param>
+        public Firearm() : base()
+        {
+            this._fireRate = 0;
+            this._ammoCapacity=0;
+            this._currentCapacity=0;
+            this._caliber = new Caliber("Не определен", 0);
+        }
+
+        /// <summary>
+        /// Конструктор для класса Firearm
+        /// </summary>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Степень опасности оружия</param>
+        /// <param name="parFireRate">Скорострельность</param>
+        /// <param name="parCaliber">Калибр</param>
+        /// <param name="parAmmoCapacity">Емкость боезапаса</param>
         public Firearm(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity) : base(parWeaponName, parWeight, parDegreeOfDanger)
         {
             this._fireRate = parFireRate;
             this._ammoCapacity = parAmmoCapacity;
             this._currentCapacity = parAmmoCapacity;
             this._caliber = parCaliber;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parFireArm">Огнестрельное оружие, свойства которого нужно копировать</param>
+        public Firearm(Firearm parFireArm) : base(parFireArm)
+        {
+            this._fireRate = parFireArm._fireRate;
+            this._ammoCapacity = parFireArm._ammoCapacity;
+            this._currentCapacity = parFireArm._currentCapacity;
+            this._caliber = parFireArm._caliber;
         }
 
         /// <summary>
@@ -117,6 +160,29 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Caliber: {1}, Fire Rate: {2}, Ammo capacity: {3}, Current capacity: {4}", base.ToString(), _caliber, _fireRate, _ammoCapacity, _currentCapacity);
+        }
+
+        /// <summary>
+        /// Редактирует поля онестрельного оружия на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Firearm newFirearm = (Firearm)newWeapon;
+            this.CaliberProperty = newFirearm.CaliberProperty;
+            this.FireRate = newFirearm.FireRate;
+            this.AmmoCapacity = newFirearm.AmmoCapacity;
+            this.CurentCapacity = newFirearm.CurentCapacity;
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Firearm(this);
         }
     }
 }

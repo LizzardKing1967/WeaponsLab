@@ -22,24 +22,46 @@ namespace WeaponsLib
         /// </summary>
         public int Range { 
             get { return _range; } 
-            set { _range = value; }
+            set 
+            { 
+                _range = value; 
+                OnPropertyChanged(nameof(Range));
+            }
         }
 
         /// <summary>
-        /// Конструктр класса Rifle
+        /// Конструктор класса Rifle
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
-        /// <param name="parFireRate"></param>
-        /// <param name="parCaliber"></param>
-        /// <param name="parAmmoCapacity"></param>
-        /// <param name="parRange"></param>
+        /// <param name="parWeaponName">Название винтовки</param>
+        /// <param name="parWeight">Вес винтовки</param>
+        /// <param name="parDegreeOfDanger">Степень опасности винтовки</param>
+        /// <param name="parFireRate">Скорострельность</param>
+        /// <param name="parCaliber">Калибр винтовки</param>
+        /// <param name="parAmmoCapacity">Емкость магазина</param>
+        /// <param name="parRange">Дальность стрельбы</param>
         public Rifle(string parWeaponName, double parWeight, double parDegreeOfDanger, int parFireRate, Caliber parCaliber, int parAmmoCapacity, int parRange)
             : base(parWeaponName, parWeight, parDegreeOfDanger, parFireRate, parCaliber, parAmmoCapacity)
         {
             this._range = parRange;
         }
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Rifle() : base() 
+        {
+            this._range = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parRifle">Винтовка, свойства которой нужно копировать</param>
+        public Rifle(Rifle parRifle) : base(parRifle)
+        {
+            this._range = parRifle._range;
+        }
+
         /// <summary>
         /// Метод для прицеливания из винтовки, увеличивающий дистанции выстрела
         /// </summary>
@@ -55,6 +77,29 @@ namespace WeaponsLib
         public override string ToString()
         {
             return string.Format("{0}, Range: {1} meters", base.ToString(), _range);
+        }
+
+        /// <summary>
+        /// Редактирует поля винтовки на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public override void EditWeapon(Weapon newWeapon)
+        {
+            base.EditWeapon(newWeapon);
+            Rifle? newRifle = newWeapon as Rifle;
+            if (newRifle != null)
+            {
+                this.Range = newRifle.Range;
+            }
+        }
+
+        /// <summary>
+        /// Получить копию
+        /// </summary>
+        /// <returns>Копия</returns>
+        public override object Clone()
+        {
+            return new Rifle(this); 
         }
     }
 }

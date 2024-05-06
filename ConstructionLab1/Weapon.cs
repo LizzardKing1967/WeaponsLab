@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,13 @@ namespace WeaponsLib
     /// <summary>
     /// Базовый класс для ручного оружия
     /// </summary>
-    public class Weapon
+    public abstract class Weapon : INotifyPropertyChanged
     {
         /// <summary>
         /// Идентификатор класса
         /// </summary>
         private Guid _id;
+
 
         /// <summary>
         /// Наименование оружия
@@ -32,37 +34,79 @@ namespace WeaponsLib
         /// </summary>
         private double _weight;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         /// <summary>
         /// Getter и Setter для поля _weaponName
         /// </summary>
         public string WeaponName { 
             get { return _weaponName; }
-            set { _weaponName = value; }
+            set 
+            { 
+                _weaponName = value;
+                OnPropertyChanged(nameof(WeaponName));
+            }
         }
+
+        //public Guid Id
+        //{
+        //    get { return _id; }
+        //}
 
         /// <summary>
         /// Getter и Setter для поля _degreeOfDanger
         /// </summary>
         public double DegreeOfDanger {
             get { return _degreeOfDanger; } 
-            set { _degreeOfDanger = value;}
+            set 
+            { 
+                _degreeOfDanger = value;
+                OnPropertyChanged(nameof(DegreeOfDanger));
+            }
         }
 
         /// <summary>
         /// Getter и Setter для поля _weight
         /// </summary>
-        public double Weight { 
+        public double Weight 
+        { 
             get { return _weight; } 
-            set { _weight = value; }
+            set 
+            { 
+                _weight = value; 
+                OnPropertyChanged(nameof(Weight));
+            }
+        }
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Weapon()
+        {
+            _id = Guid.NewGuid();
+            this._weaponName = string.Empty;
+            this._degreeOfDanger = 0;
+            this._weight = 0;
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="parWeapon">Оружие, свойства которого нужно копировать</param>
+        public Weapon(Weapon parWeapon)
+        {
+            this._weaponName = parWeapon.WeaponName;
+            this._degreeOfDanger = parWeapon.DegreeOfDanger;
+            this._weight = parWeapon.Weight;
         }
 
 
         /// <summary>
         /// Конструктор базового класса Weapon
         /// </summary>
-        /// <param name="parWeaponName"></param>
-        /// <param name="parWeight"></param>
-        /// <param name="parDegreeOfDanger"></param>
+        /// <param name="parWeaponName">Название оружия</param>
+        /// <param name="parWeight">Вес оружия</param>
+        /// <param name="parDegreeOfDanger">Опасность оружия</param>
 
         public Weapon(string parWeaponName, double parWeight, double parDegreeOfDanger) 
         {
@@ -89,6 +133,36 @@ namespace WeaponsLib
         {
             return _degreeOfDanger;
         }
+
+        /// <summary>
+        /// Редактирует поля текущего оружия на основе данных нового оружия.
+        /// </summary>
+        /// <param name="newWeapon">Новое оружие с обновленными данными.</param>
+        public virtual void EditWeapon(Weapon newWeapon)
+        {
+            if (newWeapon != null)
+            {
+                this.WeaponName = newWeapon.WeaponName;
+                this.Weight = newWeapon.Weight;
+                this.DegreeOfDanger = newWeapon.DegreeOfDanger;
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(newWeapon), "New weapon cannot be null.");
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Получить копию объекта
+        /// </summary>
+        /// <returns>Копия</returns>
+        public abstract object Clone();
+    
 
     }
 

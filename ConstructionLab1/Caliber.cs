@@ -25,8 +25,8 @@ namespace WeaponsLib
         /// <summary>
         /// Конструктор класса Caliber
         /// </summary>
-        /// <param name="parCaliberName"></param>
-        /// <param name="parCaliberDamage"></param>
+        /// <param name="parCaliberName">Название калибра</param>
+        /// <param name="parCaliberDamage">Урон калибра</param>
         public Caliber(string parCaliberName, double parCaliberDamage)
         {
             this._caliberName = parCaliberName;
@@ -48,6 +48,11 @@ namespace WeaponsLib
         public double CaliberDamage {
             get { return this._caliberDamage; } 
             set { this._caliberDamage= value; }
+        }
+
+        public override string ToString()
+        {
+            return this._caliberName;
         }
     }
 }
