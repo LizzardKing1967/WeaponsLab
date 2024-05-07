@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConstructionLab1\WeaponsLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ConstructionLab1">
+      <HintPath>..\ConstructionLab1\bin\Debug\net7.0-windows\ConstructionLab1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

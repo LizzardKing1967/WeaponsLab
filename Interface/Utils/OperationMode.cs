@@ -24,7 +24,12 @@ namespace Interface.Utils
         /// <summary>
         /// Изменение
         /// </summary>
-        Edit
+        Edit,
+
+        /// <summary>
+        /// Инициализация
+        /// </summary>
+        Initialize
     }
 
 }
