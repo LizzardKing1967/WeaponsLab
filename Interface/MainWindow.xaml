@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <WrapPanel  Grid.Row="0" Margin="5">
             <TextBlock Text="Выбор фабрики"/>
-            <ComboBox Name="ComboBoxFactory"  Grid.Column="1" Grid.Row="6" ItemsSource="{Binding FactoryMethods}"  SelectedItem="{Binding SelectedMethod}"/>
+            <ComboBox Name="ComboBoxFactory"  Grid.Column="1" Grid.Row="6" IsEditable="False" ItemsSource="{Binding FactoryMethods}"  SelectedItem="{Binding SelectedMethod}" Width="Auto"/>
             <Button Content="Добавить огнестрельное оружие" Command="{Binding AddFirearmCommand}" IsEnabled="{Binding IsFactorySelected}"/>
             <Button Content="Добавить холодное оружие" Command="{Binding AddSteelarmCommand}" IsEnabled="{Binding IsFactorySelected}"/>
             <Button Content="Изменить" Command="{Binding EditCommand}" IsEnabled="{Binding IsItemSelected}"/>
