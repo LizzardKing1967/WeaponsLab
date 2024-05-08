@@ -87,16 +87,6 @@ namespace Interface.ViewModel
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса SwordActionViewModel для добавления меча.
-        /// </summary>
-        /// <param name="parOperationMode">Режим выполнения операции.</param>
-        /// <param name="parWeaponRepository">Репозиторий оружия.</param>
-        public SwordActionViewModel(OperationMode parOperationMode, WeaponRepository parWeaponRepository) : base(parOperationMode, parWeaponRepository)
-        {
-
-        }
-
-        /// <summary>
         /// Выполняет выбранное действие в зависимости от текущего режима.
         /// </summary>
         protected override void Action()
@@ -110,8 +100,11 @@ namespace Interface.ViewModel
                     _weaponRepository.RemoveWeapon(Weapon);
                     break;
                 case OperationMode.Add:
-                    Weapon = new Sword(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, IsEnchanted);
+                    Weapon.EditWeapon(new Sword(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, IsEnchanted));
                     _weaponRepository.AddWeapon(Weapon);
+                    break;
+                case OperationMode.Initialize:
+                    Weapon.EditWeapon(new Sword(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, IsEnchanted));
                     break;
             }
             CloseWindow();

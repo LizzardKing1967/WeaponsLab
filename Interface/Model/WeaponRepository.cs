@@ -20,16 +20,6 @@ namespace Interface.Model
         private ObservableCollection<Weapon> _weapons;
 
         /// <summary>
-        /// Список калибров.
-        /// </summary>
-        private List<Caliber> _calibers;
-
-        /// <summary>
-        /// Список калибров доступных для оружия.
-        /// </summary>
-        public List<Caliber> Calibers { get { return _calibers; } }
-
-        /// <summary>
         /// Коллекция объектов оружия.
         /// </summary>
         public ObservableCollection<Weapon> Weapons
@@ -48,13 +38,6 @@ namespace Interface.Model
         {
             // Инициализация списка оружия и калибра
             Weapons = new ObservableCollection<Weapon>();
-            _calibers = new List<Caliber>
-            {
-                new Caliber(".45ACP", 120),
-                new Caliber("9mm", 100),
-                new Caliber("7.62mm", 150),
-                new Caliber("5.56mm", 130),
-            };
         }
 
         /// <summary>

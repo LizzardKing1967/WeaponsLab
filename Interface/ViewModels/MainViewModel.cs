@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WeaponsLib;
+using Factories;
 using Interface.ViewModel;
 using Interface.Utils;
 
@@ -19,14 +20,35 @@ namespace Interface
     public class MainViewModel : ViewModelBase
     {
         /// <summary>
+        /// Выбранная фабрика
+        /// </summary>
+        private IFactory _selectedFactory;
+
+        /// <summary>
+        /// Выбранный метод создания фабрики
+        /// </summary>
+        private FactoryMethod _selectedFactoryMethod;
+
+        /// <summary>
+        /// Список фабричных методов для создания фабрик
+        /// </summary>
+        private List<FactoryMethod> _factoryMethods = new List<FactoryMethod>()
+        {
+            new HeavyWeaponsFactoryCreator(),
+            new LightWeaponsFactoryCreator(),
+            new PrototypeFactoryCreator(),
+        };
+
+
+        /// <summary>
         /// Флаг, указывающий, была ли уже выполнена команда GenerateTestDataCommand.
         /// </summary>
         private bool _isTestDataGenerated = false;
 
         /// <summary>
-        /// Словарь со всеми классами для редактирования и удаления объектов типа Weapon
+        /// Словарь со всеми классами для получения форм для объектов типа Weapon
         /// </summary>
-        private readonly Dictionary<Type, WeaponEditor> _editors = new Dictionary<Type, WeaponEditor>();
+        private readonly Dictionary<Type, WeaponViewGetter> _viewGetters = new Dictionary<Type, WeaponViewGetter>();
 
         /// <summary>
         /// Репозиторий оружия
@@ -63,27 +85,65 @@ namespace Interface
         public bool IsItemSelected => SelectedWeapon != null;
 
         /// <summary>
-        /// Команда для добавления меча
+        /// Возвращает значение, указывающее, выбрана ли фабрика
         /// </summary>
-        public ICommand AddSwordCommand { get; }
+        public bool IsFactorySelected => SelectedFactory != null;
 
         /// <summary>
-        /// Команда для добавления топора
+        /// Выбранная фабрика
         /// </summary>
-        public ICommand AddAxeCommand { get; }
+        public IFactory SelectedFactory
+        {
+            get { return _selectedFactory; }
+            set
+            {
+                _selectedFactory = value;
+                OnPropertyChanged(nameof(SelectedFactory));
+            }
+        }
 
         /// <summary>
-        /// Команда для добавления винтовки
+        /// Выбранный метод создания фабрики, при выборе инициализирует фабрику
         /// </summary>
-        public ICommand AddRifleCommand { get; }
+        public FactoryMethod SelectedMethod
+        {
+            get { return _selectedFactoryMethod; }
+            set
+            {
+                _selectedFactoryMethod = value;
+                SelectedFactory = _selectedFactoryMethod.CreateFactory();
+                OnPropertyChanged(nameof(IsFactorySelected));
+            }
+        }
 
         /// <summary>
-        /// Команда для добавления пистолета
+        /// Список фабричных методов для создания фабрик
         /// </summary>
-        public ICommand AddPistolCommand { get; }
+        public List<FactoryMethod> FactoryMethods
+        {
+            get
+            {
+                return _factoryMethods;
+            }
+            set 
+            {
+                _factoryMethods = value;
+            }
+            
+        }
 
         /// <summary>
-        /// Команда для редактирования выбранного оружия
+        /// Команда для добавления огнестрельного оружия
+        /// </summary>
+        public ICommand AddFirearmCommand { get; }
+
+        /// <summary>
+        /// Команда для добавления холодного оружия
+        /// </summary>
+        public ICommand AddSteelarmCommand { get; }
+
+        /// <summary>
+        /// Команда для редактирования оружия
         /// </summary>
         public ICommand EditCommand { get; }
 
@@ -97,7 +157,6 @@ namespace Interface
         /// </summary>
         public ICommand GenerateTestDataCommand { get; }
 
-
         /// <summary>
         /// Инициализирует новый экземпляр класса MainViewModel.
         /// </summary>
@@ -106,91 +165,88 @@ namespace Interface
             _weaponModel = new WeaponRepository();
 
             // Инициализация редакторов для каждого типа оружия
-            _editors[typeof(Sword)] = new SwordEditor(_weaponModel);
-            _editors[typeof(Axe)] = new AxeEditor(_weaponModel);
-            _editors[typeof(Pistol)] = new PistolEditor(_weaponModel);
-            _editors[typeof(Rifle)] = new RifleEditor(_weaponModel);
-
-            // Инициализация команд
-            AddSwordCommand = new RelayCommand(AddSword);
-            AddAxeCommand = new RelayCommand(AddAxe);
-            AddRifleCommand = new RelayCommand(AddRifle);
-            AddPistolCommand = new RelayCommand(AddPistol);
+            _viewGetters[typeof(Sword)] = new SwordViewGetter(_weaponModel);
+            _viewGetters[typeof(Axe)] = new AxeViewGetter(_weaponModel);
+            _viewGetters[typeof(Pistol)] = new PistoViewGetter(_weaponModel);
+            _viewGetters[typeof(Rifle)] = new RifleViewGetter(_weaponModel);
+            AddFirearmCommand = new RelayCommand(AddFirearm, CanAddWeapon);
+            AddSteelarmCommand = new RelayCommand(AddSteelarm, CanAddWeapon);
             EditCommand = new RelayCommand(EditWeapon, CanEditWeapon);
             DeleteCommand = new RelayCommand(DeleteWeapon, CanDeleteWeapon);
             GenerateTestDataCommand = new RelayCommand(GenerateTestData);
         }
 
         /// <summary>
+        /// Методы проверки возможности добавления оружия.
+        /// </summary>
+        /// <returns></returns>
+        private bool CanAddWeapon() => SelectedFactory != null;
+
+        /// <summary>
         /// Методы проверки возможности редактирования выбранного оружия.
         /// </summary>
         /// <returns>Bool значение возможности редактирования</returns>
-        private bool CanEditWeapon() => SelectedWeapon != null;
+        private bool CanEditWeapon() => IsItemSelected;
 
         /// <summary>
         /// Методы проверки возможности удаления выбранного оружия.
         /// </summary>
         /// <returns>Bool значение возможности удаления</returns>
-        private bool CanDeleteWeapon() => SelectedWeapon != null;
+        private bool CanDeleteWeapon() => IsItemSelected;
 
         /// <summary>
-        /// Метод для добавления меча
+        /// Метод для добавления огнестрельного оружия
         /// </summary>
-        private void AddSword()
+        /// <exception cref="ArgumentException"></exception>
+        private void AddFirearm()
         {
-            SwordActionViewModel swordActionViewModel = new SwordActionViewModel(OperationMode.Add, _weaponModel);
-            SwordView swordView = new SwordView();
-            swordView.DataContext = swordActionViewModel;
-            swordView.ShowDialog();
-
-            if (swordActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            if (SelectedFactory != null)
             {
-                SelectedWeapon = Weapons.LastOrDefault();
+                Firearm createdFirearm = SelectedFactory.CreateFirearm();
+                // Получаем тип созданного оружия
+                Type weaponType = createdFirearm.GetType();
+                // Получаем редактор для выбранного типа оружия и вызываем метод GetView
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
+                {
+                    editor.GetView(createdFirearm, OperationMode.Add);
+                    OnPropertyChanged(nameof(Weapons));
+                    if (Weapons.LastOrDefault() != null)
+                    {
+                        SelectedWeapon = Weapons.LastOrDefault();
+                    }
+
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported weapon type");
+                }
             }
         }
-
         /// <summary>
-        /// Метод для добавления топора
+        /// Метод для добавления холодного оружия
         /// </summary>
-        private void AddAxe()
+        /// <exception cref="ArgumentException"></exception>
+        private void AddSteelarm()
         {
-            AxeActionViewModel axeActionViewModel = new AxeActionViewModel(OperationMode.Add, _weaponModel);
-            AxeWindow axeActionView = new AxeWindow();
-            axeActionView.DataContext = axeActionViewModel;
-            axeActionView.ShowDialog();
-            if (axeActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
+            if (SelectedFactory != null)
             {
-                SelectedWeapon = Weapons.LastOrDefault();
-            }
-        }
-
-        /// <summary>
-        /// Метод для добавления винтовки
-        /// </summary>
-        private void AddRifle()
-        {
-            RifleActionViewModel rifleActionViewModel = new RifleActionViewModel(OperationMode.Add, _weaponModel);
-            RifleView rifleView = new RifleView();
-            rifleView.DataContext = rifleActionViewModel;
-            rifleView.ShowDialog();
-            if (rifleActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
-            {
-                SelectedWeapon = Weapons.LastOrDefault();
-            }
-        }
-
-        /// <summary>
-        /// Метод для добавления пистолета
-        /// </summary>
-        private void AddPistol()
-        {
-            PistolActionViewModel pistolActionViewModel = new PistolActionViewModel(OperationMode.Add, _weaponModel);
-            PistolWindow pistolWindow = new PistolWindow();
-            pistolWindow.DataContext = pistolActionViewModel;
-            pistolWindow.ShowDialog();
-            if (pistolActionViewModel.ActionCompleted && Weapons.LastOrDefault() != null)
-            {
-                SelectedWeapon = Weapons.LastOrDefault();
+                SteelArm createdSteealarm = SelectedFactory.CreateSteelArm();
+                // Получаем тип созданного оружия
+                Type weaponType = createdSteealarm.GetType();
+                // Получаем редактор для выбранного типа оружия и вызываем метод GetView
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
+                {
+                    editor.GetView(createdSteealarm, OperationMode.Add);
+                    OnPropertyChanged(nameof(Weapons));
+                    if (Weapons.LastOrDefault() != null)
+                    {
+                        SelectedWeapon = Weapons.LastOrDefault();
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported weapon type");
+                }
             }
         }
 
@@ -204,10 +260,10 @@ namespace Interface
             {
                 // Получаем тип выбранного оружия
                 Type weaponType = SelectedWeapon.GetType();
-                // Получаем редактор для выбранного типа оружия и вызываем метод Edit
-                if (_editors.TryGetValue(weaponType, out WeaponEditor editor))
+                // Получаем редактор для выбранного типа оружия и вызываем метод GetView
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
-                    editor.Edit(SelectedWeapon);
+                    editor.GetView(SelectedWeapon, OperationMode.Edit);
                     OnPropertyChanged(nameof(Weapons));
                 }
                 else
@@ -226,9 +282,9 @@ namespace Interface
             if (SelectedWeapon != null)
             {
                 Type weaponType = SelectedWeapon.GetType();
-                if (_editors.TryGetValue(weaponType, out WeaponEditor editor))
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
-                    editor.Delete(SelectedWeapon);
+                    editor.GetView(SelectedWeapon, OperationMode.Delete);
                 }
                 else
                 {
@@ -244,10 +300,10 @@ namespace Interface
         {
             if (!_isTestDataGenerated)
             {
-                _weaponModel.AddWeapon(new Rifle("AKM", 3.5, 80, 60, _weaponModel.Calibers[2], 30, 0));
-                _weaponModel.AddWeapon(new Rifle("M16", 3, 70, 70, _weaponModel.Calibers[3], 30, 0));
-                _weaponModel.AddWeapon(new Pistol("Glock17", 2, 30, 30, _weaponModel.Calibers[1], 15, false));
-                _weaponModel.AddWeapon(new Pistol("Colt-1911", 2, 40, 20, _weaponModel.Calibers[0], 7, true));
+                _weaponModel.AddWeapon(new Rifle("AKM", 3.5, 80, 60, CalibersRepository.Calibers[2], 30, 0));
+                _weaponModel.AddWeapon(new Rifle("M16", 3, 70, 70, CalibersRepository.Calibers[3], 30, 0));
+                _weaponModel.AddWeapon(new Pistol("Glock17", 2, 30, 30, CalibersRepository.Calibers[1], 15, false));
+                _weaponModel.AddWeapon(new Pistol("Colt-1911", 2, 40, 20, CalibersRepository.Calibers[0], 7, true));
                 _weaponModel.AddWeapon(new Axe("Fire Axe", 7.5, 90, 12, 7, 40));
                 _weaponModel.AddWeapon(new Sword("Escalibur", 6, 80, 18, 7, true));
                 _isTestDataGenerated = true;

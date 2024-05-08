@@ -54,9 +54,9 @@ namespace Interface
         /// <summary>
         /// Определяет, может ли команда выполниться в данный момент.
         /// </summary>
-        /// <param name="parameter">Параметр команды (не используется в данной реализации).</param>
+        /// <param name="parCommand">Параметр команды (не используется в данной реализации).</param>
         /// <returns>True, если команда может выполниться; в противном случае - false.</returns>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object parCommand)
         {
             return _canExecute == null || _canExecute();
         }
@@ -64,8 +64,8 @@ namespace Interface
         /// <summary>
         /// Выполняет логику команды.
         /// </summary>
-        /// <param name="parameter">Параметр команды (не используется в данной реализации).</param>
-        public void Execute(object parameter)
+        /// <param name="parCommand">Параметр команды (не используется в данной реализации).</param>
+        public void Execute(object parCommand)
         {
             _execute();
         }

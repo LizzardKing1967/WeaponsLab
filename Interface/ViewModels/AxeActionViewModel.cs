@@ -91,13 +91,11 @@ namespace Interface
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса AxeActionViewModel для добавления топора.
+        /// Инициализирует новый экземпляр класса AxeActionViewModel для инициализации прототипа объекта Axe
         /// </summary>
+        /// <param name="parAxe">Экземпляр топора</param>
         /// <param name="parOperationMode">Режим выполнения операции.</param>
-        /// <param name="parWeaponRepository">Репозиторий оружия.</param>
-        public AxeActionViewModel(OperationMode parOperationMode, WeaponRepository parWeaponRepository) : base(parOperationMode, parWeaponRepository)
-        {
-
+        public AxeActionViewModel(Axe parAxe, OperationMode parOperationMode) : base(parAxe, parOperationMode) {
         }
 
         /// <summary>
@@ -114,8 +112,11 @@ namespace Interface
                     _weaponRepository.RemoveWeapon(Weapon);
                     break;
                 case OperationMode.Add:
-                    Weapon = new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength);
+                    Weapon.EditWeapon(new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength));
                     _weaponRepository.AddWeapon(Weapon);
+                    break;
+                case OperationMode.Initialize:
+                    Weapon.EditWeapon(new Axe(WeaponName, Weight, DegreeOfDanger, StrikeRate, DegreeOfSharpening, HandleLength));
                     break;
             }
             ActionCompleted = true;

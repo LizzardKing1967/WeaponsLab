@@ -120,14 +120,11 @@ namespace Interface.ViewModel
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса PistolActionViewModel для добавления пистолета.
+        /// Инициализирует новый экземпляр класса PistolActionViewModel для инициализации прототипа объекта Pistol
         /// </summary>
-        /// <param name="operationMode">Режим выполнения операции.</param>
-        /// <param name="weaponRepository">Репозиторий оружия.</param>
-        public PistolActionViewModel(OperationMode parOperationMode, WeaponRepository parWeaponRepository) : base(parOperationMode, parWeaponRepository)
-        {
-
-        }
+        /// <param name="parPistol">Экземпляр пистолета</param>
+        /// <param name="parOperationMode">Режим выполнения операции</param>
+        public PistolActionViewModel(Pistol parPistol, OperationMode parOperationMode) : base(parPistol, parOperationMode) { }
 
         /// <summary>
         /// Выполняет выбранное действие в зависимости от текущего режима.
@@ -143,8 +140,11 @@ namespace Interface.ViewModel
                     _weaponRepository.RemoveWeapon(Weapon);
                     break;
                 case OperationMode.Add:
-                    Weapon = new Pistol(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, HasSafety);
+                    Weapon.EditWeapon(new Pistol(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, HasSafety));
                     _weaponRepository.AddWeapon(Weapon);
+                    break;
+                case OperationMode.Initialize:
+                    Weapon.EditWeapon(new Pistol(WeaponName, Weight, DegreeOfDanger, FireRate, CaliberProperty, AmmoCapacity, HasSafety));
                     break;
             }
             CloseWindow();

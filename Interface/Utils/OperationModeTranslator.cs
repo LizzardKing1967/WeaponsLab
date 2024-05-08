@@ -20,6 +20,7 @@ namespace Interface.Utils
                 OperationMode.Add => "Добавить",
                 OperationMode.Delete => "Удалить",
                 OperationMode.Edit => "Изменить",
+                OperationMode.Initialize => "Инициализировать прототип",
                 _ => "",
             };
         }
@@ -36,6 +37,7 @@ namespace Interface.Utils
                 OperationMode.Add => "Добавление",
                 OperationMode.Delete => "Удаление",
                 OperationMode.Edit => "Изменение",
+                OperationMode.Initialize => "Инициализация прототипа",
                 _ => "",
             };
         }

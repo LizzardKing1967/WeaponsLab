@@ -61,7 +61,7 @@ namespace Interface.ViewModel
         /// </summary>
         public List<Caliber> Calibers
         {
-            get { return _weaponRepository.Calibers; }
+            get { return CalibersRepository.Calibers; }
         }
 
         /// <summary>
@@ -129,18 +129,21 @@ namespace Interface.ViewModel
         public ICommand ActionCommand { get; }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса WeaponActionViewModelBase.
+        /// Инициализирует новый экземпляр класса WeaponActionViewModelBase для инициализации прототипа.
         /// </summary>
+        /// <param name="parWeapon">Экземпляр оружия.</param>
         /// <param name="parOperationMode">Режим выполнения операции.</param>
-        /// <param name="parWeaponRepository">Репозиторий оружия.</param>
-        public WeaponActionViewModelBase(OperationMode parOperationMode, WeaponRepository parWeaponRepository)
+        public WeaponActionViewModelBase(T parWeapon, OperationMode parOperationMode)
         {
             CurrentMode = parOperationMode;
             WindowTitle = OperationModeTranslator.GetNameOperationModeForTitle(parOperationMode);
             ButtonText = OperationModeTranslator.GetNameOperationModeForButton(parOperationMode);
             ActionCommand = new RelayCommand(Action);
-            _weaponRepository = parWeaponRepository;
-            IsEditable = parOperationMode != OperationMode.Delete;
+            if (parWeapon != null)
+            {
+                Weapon = parWeapon;
+            }
+            IsEditable = true;
         }
 
         /// <summary>
@@ -150,7 +153,6 @@ namespace Interface.ViewModel
         /// <param name="parOperationMode">Режим выполнения операции.</param>
         /// <param name="parWeaponRepository">Репозиторий оружия.</param>
         public WeaponActionViewModelBase(T parWeapon, OperationMode parOperationMode, WeaponRepository parWeaponRepository)
-            : this(parOperationMode, parWeaponRepository)
         {
             CurrentMode = parOperationMode;
             if (parWeapon != null)
