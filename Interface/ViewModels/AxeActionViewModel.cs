@@ -90,7 +90,13 @@ namespace Interface
             }
         }
 
-        public AxeActionViewModel(Axe parAxe, OperationMode parOperationMode) : base(parAxe, parOperationMode) { }
+        /// <summary>
+        /// Инициализирует новый экземпляр класса AxeActionViewModel для инициализации прототипа объекта Axe
+        /// </summary>
+        /// <param name="parAxe">Экземпляр топора</param>
+        /// <param name="parOperationMode">Режим выполнения операции.</param>
+        public AxeActionViewModel(Axe parAxe, OperationMode parOperationMode) : base(parAxe, parOperationMode) {
+        }
 
         /// <summary>
         /// Выполняет выбранное действие в зависимости от текущего режима.

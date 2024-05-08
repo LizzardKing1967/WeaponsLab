@@ -131,6 +131,7 @@ namespace Interface.ViewModel
         /// <summary>
         /// Инициализирует новый экземпляр класса WeaponActionViewModelBase для инициализации прототипа.
         /// </summary>
+        /// <param name="parWeapon">Экземпляр оружия.</param>
         /// <param name="parOperationMode">Режим выполнения операции.</param>
         public WeaponActionViewModelBase(T parWeapon, OperationMode parOperationMode)
         {

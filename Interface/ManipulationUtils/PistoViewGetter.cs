@@ -23,6 +23,11 @@ namespace Interface.ManipulationUtils
         {
         }
 
+        /// <summary>
+        /// Вызывает представление для объекта типа Pistol.
+        /// </summary>
+        /// <param name="parWeapon">Объект Pistol</param>
+        /// <param name="parOperationMode">Режим работы формы</param>
         public override void GetView(Weapon parWeapon, OperationMode parOperationMode)
         {
             Pistol pistol = (Pistol)parWeapon;

@@ -23,6 +23,11 @@ namespace Interface.ManipulationUtils
         {
         }
 
+        /// <summary>
+        /// Вызывает представление для объекта типа Sword.
+        /// </summary>
+        /// <param name="parWeapon">Объект Sword</param>
+        /// <param name="parOperationMode">Режим работы формы</param>
         public override void GetView(Weapon parWeapon, OperationMode parOperationMode)
         {
             Sword sword = (Sword)parWeapon;

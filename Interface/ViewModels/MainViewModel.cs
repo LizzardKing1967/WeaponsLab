@@ -24,7 +24,10 @@ namespace Interface
         /// </summary>
         private IFactory _selectedFactory;
 
-        private FactoryMethod _factoryMethod;
+        /// <summary>
+        /// Выбранный метод создания фабрики
+        /// </summary>
+        private FactoryMethod _selectedFactoryMethod;
 
         /// <summary>
         /// Список фабричных методов для создания фабрик
@@ -43,9 +46,9 @@ namespace Interface
         private bool _isTestDataGenerated = false;
 
         /// <summary>
-        /// Словарь со всеми классами для редактирования и удаления объектов типа Weapon
+        /// Словарь со всеми классами для получения форм для объектов типа Weapon
         /// </summary>
-        private readonly Dictionary<Type, WeaponViewGetter> _editors = new Dictionary<Type, WeaponViewGetter>();
+        private readonly Dictionary<Type, WeaponViewGetter> _viewGetters = new Dictionary<Type, WeaponViewGetter>();
 
         /// <summary>
         /// Репозиторий оружия
@@ -81,6 +84,9 @@ namespace Interface
         /// </summary>
         public bool IsItemSelected => SelectedWeapon != null;
 
+        /// <summary>
+        /// Возвращает значение, указывающее, выбрана ли фабрика
+        /// </summary>
         public bool IsFactorySelected => SelectedFactory != null;
 
         /// <summary>
@@ -96,13 +102,16 @@ namespace Interface
             }
         }
 
+        /// <summary>
+        /// Выбранный метод создания фабрики, при выборе инициализирует фабрику
+        /// </summary>
         public FactoryMethod SelectedMethod
         {
-            get { return _factoryMethod; }
+            get { return _selectedFactoryMethod; }
             set
             {
-                _factoryMethod = value;
-                SelectedFactory = _factoryMethod.CreateFactory();
+                _selectedFactoryMethod = value;
+                SelectedFactory = _selectedFactoryMethod.CreateFactory();
                 OnPropertyChanged(nameof(IsFactorySelected));
             }
         }
@@ -123,10 +132,19 @@ namespace Interface
             
         }
 
+        /// <summary>
+        /// Команда для добавления огнестрельного оружия
+        /// </summary>
         public ICommand AddFirearmCommand { get; }
 
+        /// <summary>
+        /// Команда для добавления холодного оружия
+        /// </summary>
         public ICommand AddSteelarmCommand { get; }
 
+        /// <summary>
+        /// Команда для редактирования оружия
+        /// </summary>
         public ICommand EditCommand { get; }
 
         /// <summary>
@@ -139,10 +157,6 @@ namespace Interface
         /// </summary>
         public ICommand GenerateTestDataCommand { get; }
 
-
-        public Dictionary<Type, WeaponViewGetter> Editors
-        { get { return _editors; } }
-
         /// <summary>
         /// Инициализирует новый экземпляр класса MainViewModel.
         /// </summary>
@@ -151,10 +165,10 @@ namespace Interface
             _weaponModel = new WeaponRepository();
 
             // Инициализация редакторов для каждого типа оружия
-            _editors[typeof(Sword)] = new SwordViewGetter(_weaponModel);
-            _editors[typeof(Axe)] = new AxeViewGetter(_weaponModel);
-            _editors[typeof(Pistol)] = new PistoViewGetter(_weaponModel);
-            _editors[typeof(Rifle)] = new RifleViewGetter(_weaponModel);
+            _viewGetters[typeof(Sword)] = new SwordViewGetter(_weaponModel);
+            _viewGetters[typeof(Axe)] = new AxeViewGetter(_weaponModel);
+            _viewGetters[typeof(Pistol)] = new PistoViewGetter(_weaponModel);
+            _viewGetters[typeof(Rifle)] = new RifleViewGetter(_weaponModel);
             AddFirearmCommand = new RelayCommand(AddFirearm, CanAddWeapon);
             AddSteelarmCommand = new RelayCommand(AddSteelarm, CanAddWeapon);
             EditCommand = new RelayCommand(EditWeapon, CanEditWeapon);
@@ -162,6 +176,10 @@ namespace Interface
             GenerateTestDataCommand = new RelayCommand(GenerateTestData);
         }
 
+        /// <summary>
+        /// Методы проверки возможности добавления оружия.
+        /// </summary>
+        /// <returns></returns>
         private bool CanAddWeapon() => SelectedFactory != null;
 
         /// <summary>
@@ -176,7 +194,10 @@ namespace Interface
         /// <returns>Bool значение возможности удаления</returns>
         private bool CanDeleteWeapon() => IsItemSelected;
 
-
+        /// <summary>
+        /// Метод для добавления огнестрельного оружия
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         private void AddFirearm()
         {
             if (SelectedFactory != null)
@@ -185,10 +206,15 @@ namespace Interface
                 // Получаем тип созданного оружия
                 Type weaponType = createdFirearm.GetType();
                 // Получаем редактор для выбранного типа оружия и вызываем метод GetView
-                if (_editors.TryGetValue(weaponType, out WeaponViewGetter editor))
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
                     editor.GetView(createdFirearm, OperationMode.Add);
                     OnPropertyChanged(nameof(Weapons));
+                    if (Weapons.LastOrDefault() != null)
+                    {
+                        SelectedWeapon = Weapons.LastOrDefault();
+                    }
+
                 }
                 else
                 {
@@ -196,7 +222,10 @@ namespace Interface
                 }
             }
         }
-
+        /// <summary>
+        /// Метод для добавления холодного оружия
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         private void AddSteelarm()
         {
             if (SelectedFactory != null)
@@ -205,10 +234,14 @@ namespace Interface
                 // Получаем тип созданного оружия
                 Type weaponType = createdSteealarm.GetType();
                 // Получаем редактор для выбранного типа оружия и вызываем метод GetView
-                if (_editors.TryGetValue(weaponType, out WeaponViewGetter editor))
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
                     editor.GetView(createdSteealarm, OperationMode.Add);
                     OnPropertyChanged(nameof(Weapons));
+                    if (Weapons.LastOrDefault() != null)
+                    {
+                        SelectedWeapon = Weapons.LastOrDefault();
+                    }
                 }
                 else
                 {
@@ -228,7 +261,7 @@ namespace Interface
                 // Получаем тип выбранного оружия
                 Type weaponType = SelectedWeapon.GetType();
                 // Получаем редактор для выбранного типа оружия и вызываем метод GetView
-                if (_editors.TryGetValue(weaponType, out WeaponViewGetter editor))
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
                     editor.GetView(SelectedWeapon, OperationMode.Edit);
                     OnPropertyChanged(nameof(Weapons));
@@ -249,7 +282,7 @@ namespace Interface
             if (SelectedWeapon != null)
             {
                 Type weaponType = SelectedWeapon.GetType();
-                if (_editors.TryGetValue(weaponType, out WeaponViewGetter editor))
+                if (_viewGetters.TryGetValue(weaponType, out WeaponViewGetter editor))
                 {
                     editor.GetView(SelectedWeapon, OperationMode.Delete);
                 }

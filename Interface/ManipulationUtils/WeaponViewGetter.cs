@@ -29,10 +29,10 @@ namespace Interface.ManipulationUtils
         }
 
         /// <summary>
-        /// Абстрактный метод для редактирования объекта типа Weapon.
+        /// Абстрактный метод для вызова представления для оружия.
         /// </summary>
-        /// <param name="parWeapon">Объект типа Weapon, который требуется отредактировать.</param>
+        /// <param name="parWeapon">Объект типа Weapon</param>
+        /// <param name="parOperationMode">Режим работы формы</param>
         public abstract void GetView(Weapon parWeapon, OperationMode parOperationMode);
-
     }
 }

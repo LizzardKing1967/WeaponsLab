@@ -119,6 +119,11 @@ namespace Interface.ViewModel
             }
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса PistolActionViewModel для инициализации прототипа объекта Pistol
+        /// </summary>
+        /// <param name="parPistol">Экземпляр пистолета</param>
+        /// <param name="parOperationMode">Режим выполнения операции</param>
         public PistolActionViewModel(Pistol parPistol, OperationMode parOperationMode) : base(parPistol, parOperationMode) { }
 
         /// <summary>

@@ -20,12 +20,15 @@ namespace Interface.ManipulationUtils
         /// <param name="parWeaponModel">Репозиторий оружия, который будет использоваться для доступа к данным.</param>
         public AxeViewGetter(WeaponRepository parWeaponModel) : base(parWeaponModel)
         {
+
         }
 
         /// <summary>
-        /// Редактирует объект типа Axe.
+        /// Вызывает представление для объекта типа Axe.
         /// </summary>
-        /// <param name="parWeapon">Объект типа Weapon, который требуется отредактировать.</param>
+        /// <param name="parWeapon">Объект типа Weapon</param>
+        /// <param name="parOperationMode">Режим работы формы</param>
+        /// 
         public override void GetView(Weapon parWeapon, OperationMode parOperationMode)
         {
             Axe axe = (Axe)parWeapon;

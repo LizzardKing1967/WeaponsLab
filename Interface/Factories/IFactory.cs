@@ -5,7 +5,6 @@ namespace Factories
     /// <summary>
     /// Общий интерфейс фабрики
     /// </summary>
-
     public interface IFactory
     {
         /// <summary>

@@ -13,8 +13,16 @@ using WeaponsLib;
 
 namespace Factories
 {
+
+    /// <summary>
+    /// Фабричный метод для создания PrototypeFactoryCreator 
+    /// </summary>
     public class PrototypeFactoryCreator : FactoryMethod
     {
+        /// <summary>
+        /// Создание объекта PrototypeFactoryCreator
+        /// </summary>
+        /// <returns>Объект PrototypeFactoryCreator</returns>
         public override IFactory CreateFactory()
         {
             Pistol pistol = new Pistol();
@@ -23,7 +31,10 @@ namespace Factories
             InitializeSecondPrototype(pistol);
             return new PrototypeFactory(pistol, axe);
         }
-
+        /// <summary>
+        /// Инициализация первого прототипа
+        /// </summary>
+        /// <param name="parAxe">Параметр для инициализации прототипа</param>
         private void InitializeFirstPrototype(Axe parAxe)
         {
             AxeActionViewModel axeActionViewModel = new AxeActionViewModel(parAxe, OperationMode.Initialize);
@@ -33,6 +44,10 @@ namespace Factories
 
         }
 
+        /// <summary>
+        /// Инициализация второго прототипа
+        /// </summary>
+        /// <param name="parPistol">Параметр для инициализации прототипа</param>
         private void InitializeSecondPrototype(Pistol parPistol)
         {
             PistolActionViewModel pistolActionViewModel = new PistolActionViewModel(parPistol, OperationMode.Initialize);
@@ -41,7 +56,10 @@ namespace Factories
             pistolActionView.ShowDialog();
         }
 
-
+        /// <summary>
+        /// Получение текстового представление метода создания фабрики для представления в ComboBox
+        /// </summary>
+        /// <returns>Текстовое представление метода создания фабрики</returns>
         public override string ToString()
         {
             return "Фабрика прототипов";
