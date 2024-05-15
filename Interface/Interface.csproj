@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConstructionLab1\WeaponsLib.csproj" />
+    <ProjectReference Include="..\ProcessingForm\ProcessingForm.csproj" />
   </ItemGroup>
 
   <ItemGroup>

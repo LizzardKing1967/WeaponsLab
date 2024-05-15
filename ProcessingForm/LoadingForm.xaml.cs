@@ -51,18 +51,18 @@ namespace ProcessingForm
             get { return _isCanceled; }
         }
 
-        public LoadingForm(int parPlantsCount, bool parIsAutoClosed, dAddOject parAddObject, dFinish parOnFinish)
+        public LoadingForm(int parWeaaponsCount, bool parIsAutoClosed, dAddOject parAddObject, dFinish parOnFinish)
         {
             InitializeComponent();
             addNewObject = parAddObject;
             ProgressBar.Minimum = 0;
-            ProgressBar.Maximum = parPlantsCount;
+            ProgressBar.Maximum = parWeaaponsCount;
             _isAutoClosed = parIsAutoClosed;
             Closing += Window_Close;
             OnCancel += SkipDevicesSaving;
             OnFinish += parOnFinish;
 
-            Task.Run(() => PerformGeneration(parPlantsCount));
+            Task.Run(() => PerformGeneration(parWeaaponsCount));
             Task.Run(UpdateForm);
         }
 
@@ -85,7 +85,7 @@ namespace ProcessingForm
         {
             for (int i = 0; i < parWeaponsCount && !_isCanceled && !_isFinished; i++)
             {
-                await Task.Delay(500);
+                //await Task.Delay(500);
                 _createdObjects.Add(await Task.Run(() => addNewObject()));
             }
         }

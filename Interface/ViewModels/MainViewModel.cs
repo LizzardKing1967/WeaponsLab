@@ -11,6 +11,8 @@ using WeaponsLib;
 using Factories;
 using Interface.ViewModel;
 using Interface.Utils;
+using ProcessingForm;
+using Interface.DataUtils;
 
 namespace Interface
 {
@@ -39,11 +41,21 @@ namespace Interface
             new PrototypeFactoryCreator(),
         };
 
+        /// <summary>
+        /// Константа количества оружия по умолчанию
+        /// </summary>
+        const int DEFAULT_RANDOM_WEAPONS_COUNT = 1000000;
+
 
         /// <summary>
         /// Флаг, указывающий, была ли уже выполнена команда GenerateTestDataCommand.
         /// </summary>
         private bool _isTestDataGenerated = false;
+
+        /// <summary>
+        /// Значение, определяющие, будет ли форма генерации закрыта по завершению
+        /// </summary>
+        private bool _isCloseAfterCompleted;
 
         /// <summary>
         /// Словарь со всеми классами для получения форм для объектов типа Weapon
@@ -59,6 +71,11 @@ namespace Interface
         /// Выбранное оружие.
         /// </summary>
         protected Weapon _selectedWeapon;
+        
+        /// <summary>
+        /// Количество случайных единиц оружия для создания
+        /// </summary>
+        private int _randomWeaponsCount;
 
         /// <summary>
         /// Getter и Setter для выбранного оружия.
@@ -133,6 +150,24 @@ namespace Interface
         }
 
         /// <summary>
+        ///  Количество случайных единиц оружия для создания
+        /// </summary>
+        public int RandomWeaponsCount
+        {
+            get => _randomWeaponsCount;
+            set { _randomWeaponsCount = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsCloseAfterCompleted
+        {
+            get => _isCloseAfterCompleted;
+            set { _isCloseAfterCompleted = value; }
+        }
+
+        /// <summary>
         /// Команда для добавления огнестрельного оружия
         /// </summary>
         public ICommand AddFirearmCommand { get; }
@@ -158,12 +193,18 @@ namespace Interface
         public ICommand GenerateTestDataCommand { get; }
 
         /// <summary>
+        /// Команда для генерации случайных тестовых данных
+        /// </summary>
+        public ICommand GenerateRandomDataCommand { get; }
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса MainViewModel.
         /// </summary>
         public MainViewModel()
         {
             _weaponModel = new WeaponRepository();
-
+            RandomWeaponsCount = DEFAULT_RANDOM_WEAPONS_COUNT;
+            IsCloseAfterCompleted = true;
             // Инициализация редакторов для каждого типа оружия
             _viewGetters[typeof(Sword)] = new SwordViewGetter(_weaponModel);
             _viewGetters[typeof(Axe)] = new AxeViewGetter(_weaponModel);
@@ -174,6 +215,7 @@ namespace Interface
             EditCommand = new RelayCommand(EditWeapon, CanEditWeapon);
             DeleteCommand = new RelayCommand(DeleteWeapon, CanDeleteWeapon);
             GenerateTestDataCommand = new RelayCommand(GenerateTestData);
+            GenerateRandomDataCommand = new RelayCommand(GenerateRandomData);
         }
 
         /// <summary>
@@ -309,6 +351,23 @@ namespace Interface
                 _isTestDataGenerated = true;
             }
         }
+
+        private void GenerateRandomData()
+        {
+            if (RandomWeaponsCount > 0)
+            {
+                LoadingForm processingForm = new LoadingForm(RandomWeaponsCount, IsCloseAfterCompleted, RandomWeaponGenerator.CreateRandomWeapon, AddRandomData);
+                processingForm.Show();
+            }
+
+        }
+
+        private void AddRandomData(List<object> parWeapons)
+        {
+            parWeapons.ForEach(weapon => _weaponModel.AddWeapon((Weapon)weapon));
+            OnPropertyChanged(nameof(WeaponRepository));
+        }
+
 
         /// <summary>
         /// Метод, вызываемый при освобождении ресурсов.
