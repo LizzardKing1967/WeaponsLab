@@ -1,0 +1,21 @@
+﻿<Window x:Class="ProcessingForm.LoadingForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProcessingForm"
+        mc:Ignorable="d"
+        Title="Процесс генерации случайных значений" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="1" VerticalAlignment="Top" Height="24" Margin="10,64,10,0" Value="0"/>
+        <TextBlock Grid.Row="1" Text="{Binding ElementName=ProgressBar, Path=Value, StringFormat={}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="ButtonCancel" Content="Отменить" Margin="307,73,307,31" Grid.Row="2"  Click="ButtonCancel_Click"/>
+        <Label x:Name="LabelProcess" Content="Генерация случайных значений" HorizontalAlignment="Center" VerticalAlignment="Center" Height="69" Width="721" FontSize="30" HorizontalContentAlignment="Center"/>
+    </Grid>
+
+</Window>
