@@ -18,7 +18,6 @@ namespace WeaponsLib
         /// </summary>
         private Guid _id;
 
-
         /// <summary>
         /// Наименование оружия
         /// </summary>
@@ -34,6 +33,10 @@ namespace WeaponsLib
         /// </summary>
         private double _weight;
 
+        /// <summary>
+        /// Событие, возникающее при изменении значения свойства.
+        /// Это событие используется для уведомления привязанных данных (например, в интерфейсе WPF) о том, что одно из свойств объекта было изменено.
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
@@ -48,10 +51,10 @@ namespace WeaponsLib
             }
         }
 
-        //public Guid Id
-        //{
-        //    get { return _id; }
-        //}
+        public Guid Id
+        {
+            get { return _id; }
+        }
 
         /// <summary>
         /// Getter и Setter для поля _degreeOfDanger

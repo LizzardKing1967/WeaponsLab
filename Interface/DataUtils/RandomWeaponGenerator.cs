@@ -40,8 +40,6 @@ namespace Interface.DataUtils
           () => new Axe(),
         };
 
-
-
         /// <summary>
         /// Создание случайного оружия
         /// </summary>
@@ -51,8 +49,8 @@ namespace Interface.DataUtils
             Weapon result = _weaponCreator[_random.Next(_weaponCreator.Length)]();
 
             result.WeaponName = GetRandomName();
-            result.Weight = _random.NextDouble() * 100;
-            result.DegreeOfDanger = _random.NextDouble() * 100;
+            result.Weight = Math.Round(_random.NextDouble() * 100, 2);
+            result.DegreeOfDanger = Math.Round(_random.NextDouble() * 100, 2);
             return result;
         }
 

@@ -1,18 +1,14 @@
 ﻿using Interface.ManipulationUtils;
 using Interface.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WeaponsLib;
 using Factories;
-using Interface.ViewModel;
 using Interface.Utils;
 using ProcessingForm;
 using Interface.DataUtils;
+using Interface.FilterUtils;
+using System.Windows.Data;
 
 namespace Interface
 {
@@ -71,7 +67,116 @@ namespace Interface
         /// Выбранное оружие.
         /// </summary>
         protected Weapon _selectedWeapon;
-        
+
+        /// <summary>
+        /// Последнее выбранное оружие перед фильтрацией.
+        /// </summary>
+        private Weapon _lastSelectedWeapon;
+
+        /// <summary>
+        /// Сервис для фильтрации списка оружия.
+        /// </summary>
+        private readonly IFiltrable<Weapon> _filtration;
+
+        /// <summary>
+        /// Текстовое значение для фильтрации по названию.
+        /// </summary>
+        private string _filterText;
+
+        /// <summary>
+        /// Числовое значение для фильтрации.
+        /// </summary>
+        private double? _filterNumericValue;
+
+        /// <summary>
+        /// Текстовое представление числового значения для фильтрации.
+        /// </summary>
+        private string _filterNumericValueText;
+
+        /// <summary>
+        /// Текстовое представление минимального числового значения для фильтрации по диапазону.
+        /// </summary>
+        private string _filterNumericValueMinText;
+
+        /// <summary>
+        /// Текстовое представление максимального числового значения для фильтрации по диапазону.
+        /// </summary>
+        private string _filterNumericValueMaxText;
+
+        /// <summary>
+        /// Источник данных для представления отфильтрованного списка оружия.
+        /// </summary>
+        private CollectionViewSource _filteredWeapons;
+
+        /// <summary>
+        /// Выбранный тип фильтрации.
+        /// </summary>
+        private FilterTypeItem _selectedFilterType;
+
+        /// <summary>
+        /// Минимальное значение для фильтрации по диапазону.
+        /// </summary>
+        private double? _filterNumericValueMin;
+
+        /// <summary>
+        /// Максимальное значение для фильтрации по диапазону.
+        /// </summary>
+        private double? _filterNumericValueMax;
+
+        /// <summary>
+        /// Возвращает коллекцию доступных типов фильтров для оружия.
+        /// Каждый фильтр позволяет выбирать, по какому критерию будет выполняться фильтрация: 
+        /// по названию оружия, по весу или по диапазону веса.
+        /// </summary>
+        public IEnumerable<FilterTypeItem> FilterTypes { get; } = new List<FilterTypeItem>
+        {
+            new FilterTypeItem(FilterType.Name, "Фильтр по названию"),
+            new FilterTypeItem(FilterType.Weight, "Фильтр по весу"),
+            new FilterTypeItem(FilterType.WeightRange, "Фильтр по диапазону")
+        };
+
+        /// <summary>
+        /// Возвращает или задает выбранное оружие.
+        /// </summary>
+        public FilterTypeItem SelectedFilterType
+        {
+            get => _selectedFilterType;
+            set
+            {
+                _selectedFilterType = value;
+                OnPropertyChanged(nameof(SelectedFilterType));
+                ApplyFilters();
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает числовое значение для фильтрации по весу или другим числовым параметрам.
+        /// </summary>
+        public double? FilterNumericValueMin
+        {
+            get => _filterNumericValueMin;
+            set
+            {
+                _filterNumericValueMin = value;
+                OnPropertyChanged(nameof(FilterNumericValueMin));
+                ApplyFilters();
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает числовое значение для фильтрации по весу или другим числовым параметрам.
+        /// </summary>
+        public double? FilterNumericValueMax
+        {
+            get => _filterNumericValueMax;
+            set
+            {
+                _filterNumericValueMax = value;
+                OnPropertyChanged(nameof(FilterNumericValueMax));
+                ApplyFilters();
+            }
+        }
+
         /// <summary>
         /// Количество случайных единиц оружия для создания
         /// </summary>
@@ -88,6 +193,97 @@ namespace Interface
                 _selectedWeapon = value;
                 OnPropertyChanged(nameof(SelectedWeapon));
                 OnPropertyChanged(nameof(IsItemSelected));
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает текст фильтрации по названию оружия.
+        /// </summary>
+        public string FilterText
+        {
+            get => _filterText;
+            set
+            {
+                _filterText = value;
+                OnPropertyChanged(nameof(FilterText));
+                ApplyFilters();
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает числовое значение для фильтрации по весу или другим числовым параметрам.
+        /// </summary>
+        public double? FilterNumericValue
+        {
+            get => _filterNumericValue;
+            set
+            {
+                _filterNumericValue = value;
+                OnPropertyChanged(nameof(FilterNumericValue));
+                ApplyFilters();
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает текстовое представление числового значения для фильтрации.
+        /// </summary>
+        public string FilterNumericValueText
+        {
+            get => _filterNumericValueText;
+            set
+            {
+                _filterNumericValueText = value;
+                if (double.TryParse(value, out double numericValue))
+                {
+                    FilterNumericValue = numericValue;
+                }
+                else
+                {
+                    FilterNumericValue = null;
+                }
+                OnPropertyChanged(nameof(FilterNumericValueText));
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает текстовое представление минимального значения для фильтрации по диапазону.
+        /// </summary>
+        public string FilterNumericValueMinText
+        {
+            get => _filterNumericValueMinText;
+            set
+            {
+                _filterNumericValueMinText = value;
+                if (double.TryParse(value, out double numericValue))
+                {
+                    FilterNumericValueMin = numericValue;
+                }
+                else
+                {
+                    FilterNumericValueMin = null;
+                }
+                OnPropertyChanged(nameof(FilterNumericValueMinText));
+            }
+        }
+
+        /// <summary>
+        /// Возвращает или задает текстовое представление максимального значения для фильтрации по диапазону.
+        /// </summary>
+        public string FilterNumericValueMaxText
+        {
+            get => _filterNumericValueMaxText;
+            set
+            {
+                _filterNumericValueMaxText = value;
+                if (double.TryParse(value, out double numericValue))
+                {
+                    FilterNumericValueMax = numericValue;
+                }
+                else
+                {
+                    FilterNumericValueMax = null;
+                }
+                OnPropertyChanged(nameof(FilterNumericValueMaxText));
             }
         }
 
@@ -159,12 +355,47 @@ namespace Interface
         }
 
         /// <summary>
-        /// 
+        /// Возвращает или задает флаг, будет ли форма генерации закрыта после завершения процесса.
         /// </summary>
         public bool IsCloseAfterCompleted
         {
             get => _isCloseAfterCompleted;
             set { _isCloseAfterCompleted = value; }
+        }
+
+        /// <summary>
+        /// Возвращает отфильтрованную коллекцию оружия.
+        /// </summary>
+        public CollectionViewSource FilteredWeapons
+        {
+            get
+            {
+                if (_filteredWeapons == null)
+                {
+                    _filteredWeapons = new CollectionViewSource { Source = Weapons };
+                }
+                return _filteredWeapons;
+            }
+        }
+
+        /// <summary>
+        /// Применяет фильтры к коллекции оружия на основе установленных критериев.
+        /// </summary>
+        private void ApplyFilters()
+        {
+            _lastSelectedWeapon = SelectedWeapon;
+            var filteredItems = _filtration.ApplyFilters(Weapons, FilterText, FilterNumericValue, FilterNumericValueMin, FilterNumericValueMax);
+            FilteredWeapons.Source = new ObservableCollection<Weapon>(filteredItems);
+            OnPropertyChanged(nameof(FilteredWeapons));
+
+            if (_lastSelectedWeapon != null)
+            {
+                var newSelectedWeapon = filteredItems.FirstOrDefault(w => w.Id == _lastSelectedWeapon.Id);
+                if (newSelectedWeapon != null)
+                {
+                    SelectedWeapon = newSelectedWeapon;
+                }
+            }
         }
 
         /// <summary>
@@ -199,9 +430,15 @@ namespace Interface
 
         /// <summary>
         /// Инициализирует новый экземпляр класса MainViewModel.
+        /// <param name="filtration">
+        /// Объект, реализующий интерфейс IFiltrable для фильтрации объектов типа Weapon.
+        /// Этот объект отвечает за применение фильтров к коллекции оружия на основе
+        /// заданных параметров, таких как название, вес или диапазон значений.
+        /// </param>
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(IFiltrable<Weapon> filtration)
         {
+            _filtration = filtration;
             _weaponModel = new WeaponRepository();
             RandomWeaponsCount = DEFAULT_RANDOM_WEAPONS_COUNT;
             IsCloseAfterCompleted = true;
@@ -264,6 +501,7 @@ namespace Interface
                 }
             }
         }
+
         /// <summary>
         /// Метод для добавления холодного оружия
         /// </summary>
@@ -352,6 +590,9 @@ namespace Interface
             }
         }
 
+        /// <summary>
+        /// Генерирует случайные данные оружия.
+        /// </summary>
         private void GenerateRandomData()
         {
             if (RandomWeaponsCount > 0)
@@ -362,6 +603,9 @@ namespace Interface
 
         }
 
+        /// <summary>
+        /// Добавляет случайные данные на форму.
+        /// </summary>
         private void AddRandomData(List<object> parWeapons)
         {
             parWeapons.ForEach(weapon => _weaponModel.AddWeapon((Weapon)weapon));

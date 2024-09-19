@@ -1,5 +1,6 @@
 ﻿<Window x:Class="Interface.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:Interface"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -7,19 +8,28 @@
         mc:Ignorable="d"
         Title="Оружие" Height="450" Width="800">
     <Window.Resources>
+        <Style x:Key="LabelVisibilityStyle" TargetType="Label">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedFilterType.Type}" Value="WeightRange">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="3"/>
         </Style>
+        
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="117"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <WrapPanel  Grid.Row="0" Margin="5">
-            <TextBlock Text="Выбор фабрики"/>
+        <WrapPanel  Grid.Row="0" Margin="5,5,5,5">
+            <TextBlock Text="Выбор фабрики:"/>
             <ComboBox Name="ComboBoxFactory"  Grid.Column="1" Grid.Row="6" IsEditable="False" ItemsSource="{Binding FactoryMethods}"  SelectedItem="{Binding SelectedMethod}" Width="Auto"/>
             <Button Content="Добавить огнестрельное оружие" Command="{Binding AddFirearmCommand}" IsEnabled="{Binding IsFactorySelected}"/>
             <Button Content="Добавить холодное оружие" Command="{Binding AddSteelarmCommand}" IsEnabled="{Binding IsFactorySelected}"/>
@@ -30,13 +40,86 @@
             <TextBlock Text="Количество случаных записей" Width="171"/>
             <controls:NumericUpDown Name="NumericUpDownCount" Value="{Binding RandomWeaponsCount}" NumericInputMode="Numbers" Minimum="1" Maximum="1000000" Interval="1000" Width="193"/>
             <CheckBox Margin="10" Content="Закрыть по завершению?" IsChecked="{Binding IsCloseAfterCompleted}"/>
+            <TextBlock Text="Выбор фильтра:"/>
+            <ComboBox Name="ComboBoxFilter" 
+                          Grid.Column="1" 
+                          Grid.Row="3" 
+                          IsEditable="False" 
+                          ItemsSource="{Binding FilterTypes}" 
+                          SelectedValuePath="Type"
+                          DisplayMemberPath="DisplayName"
+                          SelectedItem="{Binding SelectedFilterType}" 
+                          Width="Auto"/>
+            <TextBox Width="150" 
+                         Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedFilterType.Type}" Value="Name">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox Width="100" 
+                         Text="{Binding FilterNumericValueText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedFilterType.Type}" Value="Weight">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Label Content="min" Style="{StaticResource LabelVisibilityStyle}"/>
+            <TextBox Width="100" 
+                         Text="{Binding FilterNumericValueMinText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedFilterType.Type}" Value="WeightRange">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Label Content="max" Style="{StaticResource LabelVisibilityStyle}"/>
+            <TextBox Width="100" 
+                         Text="{Binding FilterNumericValueMaxText, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedFilterType.Type}" Value="WeightRange">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <!--<TextBox Margin="10" Width="150" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Margin="10" Width="100" Text="{Binding FilterNumericValueText, UpdateSourceTrigger=PropertyChanged}" />-->
+            
+
+
         </WrapPanel>
 
-        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Weapons}" SelectedItem="{Binding SelectedWeapon}" 
+        <DataGrid Grid.Row="1" Margin="5,10,5,5" ItemsSource="{Binding FilteredWeapons.View}" SelectedItem="{Binding SelectedWeapon}" 
           IsReadOnly="True" HorizontalGridLinesBrush="Black" 
           RowBackground="LightGray" AlternatingRowBackground="LightGray"
-          RowHeight="25" AutoGenerateColumns="True"
-          AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
+          RowHeight="25" AutoGenerateColumns="False" ColumnWidth="*">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название оружия" Binding="{Binding WeaponName}" />
+                <DataGridTextColumn Header="Вес оружия" Binding="{Binding Weight}" />
+                <DataGridTextColumn Header="Урон от оружия" Binding="{Binding DegreeOfDanger}" />
+            </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Добавить">
